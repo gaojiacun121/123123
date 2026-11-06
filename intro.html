@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>平台介绍 | 纵向性状全转录组关联分析精细定位计算平台</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft Yahei", system-ui, sans-serif;
+    }
+    .nav-bar{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      z-index:999;
+      background:rgba(255,255,255,0.7);
+      backdrop-filter: blur(6px);
+      padding:12px 20px;
+      display:flex;
+      justify-content:center;
+      gap:12px;
+    }
+    .nav-btn{
+      padding:8px 22px;
+      border:none;
+      border-radius:8px;
+      font-size:15px;
+      cursor:pointer;
+      background:#2980b9;
+      color:#ffffff;
+      transition:0.24s ease;
+    }
+    .nav-btn.active{
+      background:#ffffff;
+      color:#222222;
+      box-shadow:0 2px 6px rgba(0,0,0,0.12);
+    }
+    .nav-btn:hover:not(.active){
+      background:#1f6d99;
+    }
+
+    body {
+      background: linear-gradient(135deg, #e1edf8 0%, #c8e0f5 100%);
+      min-height:100vh;
+      padding:70px 20px 40px;
+      color:#2c3e50;
+    }
+    .container{
+      max-width:860px;
+      margin:0 auto;
+    }
+    .back-box{
+      margin-bottom:24px;
+    }
+    .back-box a{
+      color:#2980b9;
+      text-decoration:none;
+      font-size:16px;
+    }
+    .back-box a:hover{
+      text-decoration:underline;
+    }
+    h2{
+      text-align:center;
+      font-size:28px;
+      color:#154366;
+      margin-bottom:32px;
+    }
+    .intro-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:24px;
+    }
+    .intro-card{
+      background:rgba(255,255,255,0.68);
+      backdrop-filter:blur(8px);
+      border-radius:14px;
+      box-shadow:0 4px 16px rgba(41,128,185,0.1);
+      padding:28px 24px;
+      min-height:220px;
+    }
+    @media(max-width:768px){
+      .nav-bar{
+        gap:6px;
+      }
+      .nav-btn{
+        padding:7px 12px;
+        font-size:14px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="nav-bar">
+  <button class="nav-btn" data-target="intro" onclick="location.href='intro.html'">平台介绍</button>
+  <button class="nav-btn" data-target="analysis" onclick="location.href='analysis.html'">数据上传</button>
+  <button class="nav-btn" data-target="result" onclick="location.href='result.html'">结果展示</button>
+</div>
+
+<div class="container">
+  <div class="back-box">
+    <a href="index.html">← 返回平台首页</a>
+  </div>
+  <h2>平台介绍</h2>
+  <div class="intro-grid">
+    <div class="intro-card">
+    </div>
+    <div class="intro-card">
+    </div>
+    <div class="intro-card">
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  const path = window.location.pathname;
+  const btns = document.querySelectorAll(".nav-btn");
+  btns.forEach(b=>{
+    const t = b.dataset.target;
+    if(t==="intro" && path.includes("intro.html")) b.classList.add("active");
+    if(t==="analysis" && path.includes("analysis.html")) b.classList.add("active");
+    if(t==="result" && path.includes("result.html")) b.classList.add("active");
+  })
+})()
+</script>
+</body>
+</html>

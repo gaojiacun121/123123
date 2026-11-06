@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>平台分析功能 | 纵向性状全转录组关联分析精细定位计算平台</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft Yahei", system-ui, sans-serif;
+    }
+    .nav-bar{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      z-index:999;
+      background:rgba(255,255,255,0.7);
+      backdrop-filter: blur(6px);
+      padding:12px 20px;
+      display:flex;
+      justify-content:center;
+      gap:12px;
+    }
+    .nav-btn{
+      padding:8px 22px;
+      border:none;
+      border-radius:8px;
+      font-size:15px;
+      cursor:pointer;
+      background:#2980b9;
+      color:#ffffff;
+      transition:0.24s ease;
+    }
+    .nav-btn.active{
+      background:#ffffff;
+      color:#222222;
+      box-shadow:0 2px 6px rgba(0,0,0,0.12);
+    }
+    .nav-btn:hover:not(.active){
+      background:#1f6d99;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      padding:70px 20px 40px;
+      color: #2c3e50;
+    }
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    .back-home{
+      margin-bottom:20px;
+    }
+    .back-home a{
+      color:#2980b9;
+      text-decoration:none;
+    }
+    .back-home a:hover{
+      text-decoration:underline;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 28px;
+      font-size:24px;
+    }
+    .grid-wrap {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .block {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .block.block-zoom{
+      transform: scale(1.03);
+      box-shadow:0 6px 20px rgba(41,128,185,0.22);
+    }
+    .block h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      padding-left: 8px;
+      border-left: 4px solid #2980b9;
+    }
+    .item {
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 1px dashed #e4e9ee;
+    }
+    .item:last-child {
+      border-bottom: none;
+    }
+    input, select {
+      width: 100%;
+      margin: 6px 0;
+      padding: 6px;
+      border: 1px solid #d2d9e0;
+      border-radius: 4px;
+    }
+    .param-group{
+      padding-left:10px;
+      margin:8px 0;
+      flex-grow:1;
+    }
+    .check-item{
+      display:flex;
+      gap:6px;
+      align-items:center;
+      margin:4px 0;
+    }
+    input[type="checkbox"]{
+      width:auto;
+      margin:0;
+    }
+    .btn-export{
+      width:100%;
+      padding:8px 10px;
+      background:#2980b9;
+      color:#fff;
+      border:none;
+      border-radius:4px;
+      cursor:pointer;
+      font-size:14px;
+      margin-top: auto;
+    }
+    @media(max-width:768px){
+      .grid-wrap{
+        grid-template-columns:1fr;
+      }
+      .nav-bar{
+        gap:6px;
+      }
+      .nav-btn{
+        padding:7px 12px;
+        font-size:14px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="nav-bar">
+  <button class="nav-btn" data-target="intro" onclick="location.href='intro.html'">平台介绍</button>
+  <button class="nav-btn" data-target="analysis" onclick="location.href='analysis.html'">数据上传</button>
+  <button class="nav-btn" data-target="result" onclick="location.href='result.html'">结果展示</button>
+</div>
+
+<div class="container">
+  <div class="back-home">
+    <a href="index.html">← 返回平台首页</a>
+  </div>
+  <h2>分析功能模块</h2>
+  <div class="grid-wrap">
+    <div class="block" id="block-phe">
+      <h3>📊 表型数据处理</h3>
+      <div class="item">
+        表型数据文件输入
+        <input type="file">
+      </div>
+      <div class="item">
+        参数设置
+        <div class="param-group">
+          <div class="check-item">
+            <input type="checkbox" id="phe_filter_miss">
+            <label for="phe_filter_miss">缺失值过滤（缺失率＞0.3剔除）</label>
+          </div>
+          <div class="check-item">
+            <input type="checkbox" id="phe_norm">
+            <label for="phe_norm">表型正态化转换</label>
+          </div>
+        </div>
+      </div>
+      <button class="btn-export">执行处理并导出本模块数据</button>
+    </div>
+    <div class="block" id="block-geno">
+      <h3>🧬 基因型数据处理</h3>
+      <div class="item">
+        基因型文件输入
+        <input type="file" multiple>
+      </div>
+      <div class="item">
+        参数设置
+        <div class="param-group">
+          <label>最小等位基因频率(MAF)</label>
+          <select>
+            <option>剔除MAF小于1%</option>
+            <option selected>剔除MAF小于5%</option>
+          </select>
+          <label>个体缺失率</label>
+          <select>
+            <option>剔除高于5%</option>
+            <option selected>剔除高于10%</option>
+          </select>
+          <div class="check-item">
+            <input type="checkbox" id="geno_hwe">
+            <label for="geno_hwe">哈代-温伯格平衡检验（剔除P＜1e-6的SNP）</label>
+          </div>
+        </div>
+      </div>
+      <button class="btn-export">执行处理并导出本模块数据</button>
+    </div>
+    <div class="block" id="block-rna">
+      <h3>📜 RNAseq数据处理</h3>
+      <div class="item">
+        RNA‑seq表达矩阵输入
+        <input type="file">
+      </div>
+      <div class="item">
+        参数设置
+        <div class="param-group">
+          <div class="check-item">
+            <input type="checkbox" id="rna_filter_sample">
+            <label for="rna_filter_sample">剔除低质量样本（比对率低于80%）</label>
+          </div>
+          <div class="check-item">
+            <input type="checkbox" id="rna_filter_gene">
+            <label for="rna_filter_gene">去除低表达基因（超过50%样本中表达量为0）</label>
+          </div>
+          <div class="check-item">
+            <input type="checkbox" id="rna_normalize">
+            <label for="rna_normalize">基因表达量标准化</label>
+          </div>
+          <label>标准化方法</label>
+          <select>
+            <option>TPM</option>
+            <option>FPKM</option>
+          </select>
+          <div class="check-item">
+            <input type="checkbox" id="rna_batch">
+            <label for="rna_batch">校正批次效应</label>
+          </div>
+          <label>批次校正方法</label>
+          <select>
+            <option>ComBat</option>
+            <option>PEER</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-export">执行处理并导出本模块数据</button>
+    </div>
+    <div class="block" id="block-pred">
+      <h3>🔮 表达量预测</h3>
+      <div class="item">
+        RNA-seq数据输入（用于训练权重）
+        <input type="file">
+      </div>
+      <div class="item">
+        预处理后基因型输入
+        <input type="file">
+      </div>
+      <div class="item">
+        <label>预测模型选择</label>
+        <select>
+          <option selected>Elastic Net</option>
+        </select>
+      </div>
+      <button class="btn-export">执行预测并导出本模块数据</button>
+    </div>
+    <div class="block" id="block-gwas">
+      <h3>📈 GWAS分析<br />(单性状动物模型 / 随机回归模型)</h3>
+      <div class="item">
+        预处理后表型输入
+        <input type="file">
+      </div>
+      <div class="item">
+        预处理后基因型输入
+        <input type="file">
+      </div>
+      <div class="item">
+        参数设置
+        <div class="param-group">
+          <label>GWAS模型选择</label>
+          <select>
+            <option>单性状动物模型</option>
+            <option>随机回归模型</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-export">执行分析并导出本模块数据</button>
+    </div>
+    <div class="block" id="block-twas">
+      <h3>🧪 TWAS分析(常规 / 纵向)</h3>
+      <div class="item">
+        GWAS结果文件输入
+        <input type="file">
+      </div>
+      <div class="item">
+        预测GReX表达文件输入
+        <input type="file">
+      </div>
+      <div class="item">
+        参数设置
+        <div class="param-group">
+          <label>TWAS模式选择</label>
+          <select>
+            <option>常规TWAS</option>
+            <option>纵向TWAS</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-export">执行分析并导出本模块数据</button>
+    </div>
+  </div>
+</div>
+<script>
+document.querySelectorAll('.btn-export').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    if(!this.disabled){
+      alert(this.innerText + "，前端触发，后端接口待对接");
+    }
+  })
+})
+const urlParams = new URLSearchParams(window.location.search);
+const mod = urlParams.get('module');
+if(mod){
+  const targetDom = document.getElementById('block-' + mod);
+  if(targetDom){
+    targetDom.classList.add('block-zoom');
+    setTimeout(()=>{
+      targetDom.classList.remove('block-zoom');
+    },1200);
+  }
+}
+(function(){
+  const path = window.location.pathname;
+  const btns = document.querySelectorAll(".nav-btn");
+  btns.forEach(b=>{
+    const t = b.dataset.target;
+    if(t==="intro" && path.includes("intro.html")) b.classList.add("active");
+    if(t==="analysis" && path.includes("analysis.html")) b.classList.add("active");
+    if(t==="result" && path.includes("result.html")) b.classList.add("active");
+  })
+})()
+</script>
+</body>
+</html>
