@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>基因型数据上传 | 纵向性状全转录组关联分析精细定位计算平台</title>
+  <title>平台分析功能 | 纵向性状全转录组关联分析精细定位计算平台</title>
   <style>
     * {
       margin: 0;
@@ -34,6 +34,7 @@
       color:#ffffff;
       transition:0.24s ease;
     }
+    /* 当前页激活样式：白底黑字 */
     .nav-btn.active{
       background:#ffffff;
       color:#222222;
@@ -49,112 +50,115 @@
       color: #2c3e50;
     }
     .container {
-      max-width:900px;
+      max-width: 1240px;
       margin: 0 auto;
     }
-    .back-link{
-      margin-bottom:24px;
+    .back-home{
+      margin-bottom:20px;
     }
-    .back-link a{
+    .back-home a{
       color:#2980b9;
       text-decoration:none;
     }
-    .back-link a:hover{
+    .back-home a:hover{
       text-decoration:underline;
     }
     h2 {
       text-align: center;
       margin-bottom: 28px;
       font-size:24px;
-      color:#154366;
     }
-    .card-box{
-      background:#ffffff;
-      border-radius:12px;
-      padding:28px;
-      box-shadow:0 2px 12px rgba(41,128,185,0.08);
+    .grid-wrap {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
     }
-    .form-row{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:18px;
-      margin-bottom:18px;
+    .block {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
-    .form-item{
+    .block.block-zoom{
+      transform: scale(1.03);
+      box-shadow:0 6px 20px rgba(41,128,185,0.22);
+    }
+    .block h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      padding-left: 8px;
+      border-left: 4px solid #2980b9;
+    }
+    .item {
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 1px dashed #e4e9ee;
+    }
+    .item:last-child {
+      border-bottom: none;
+    }
+    input, select {
+      width: 100%;
+      margin: 6px 0;
+      padding: 6px;
+      border: 1px solid #d2d9e0;
+      border-radius: 4px;
+    }
+    .param-group{
+      padding-left:10px;
+      margin:8px 0;
+      flex-grow:1;
+    }
+    .check-item{
       display:flex;
-      flex-direction:column;
+      gap:6px;
+      align-items:center;
+      margin:4px 0;
     }
-    label{
-      font-size:14px;
-      margin-bottom:6px;
+    input[type="checkbox"]{
+      width:auto;
+      margin:0;
     }
-    label .red{
-      color:#dc3545;
-    }
-    input,select,textarea{
+    .btn-export{
+      width:100%;
       padding:8px 10px;
-      border:1px solid #d2d9e0;
-      border-radius:6px;
-      font-size:14px;
-    }
-    textarea{
-      min-height:120px;
-      resize:vertical;
-    }
-    .upload-area{
-      border:2px dashed #d2d9e0;
-      border-radius:8px;
-      padding:32px 16px;
-      text-align:center;
-      margin:8px 0 18px;
-    }
-    .upload-area .tip{
-      font-size:13px;
-      color:#666;
-      margin-top:8px;
-    }
-    .btn-normal{
-      padding:9px 24px;
-      border:none;
-      border-radius:6px;
       background:#2980b9;
       color:#fff;
+      border:none;
+      border-radius:4px;
       cursor:pointer;
       font-size:14px;
+      margin-top: auto;
     }
-    .btn-normal:hover{
-      background:#1f6d99;
-    }
-    .bottom-bar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-top:24px;
-    }
-    .check-wrap{
-      display:flex;
-      align-items:center;
-      gap:6px;
+    .btn-small{
+      width:100%;
+      padding:9px;
+      background:#ffffff;
+      color:#2980b9;
+      border:1px solid #2980b9;
+      border-radius:4px;
+      cursor:pointer;
       font-size:14px;
+      margin:6px 0;
+    }
+    .btn-small:hover{
+      background:#2980b9;
+      color:#fff;
     }
     @media(max-width:768px){
+      .grid-wrap{
+        grid-template-columns:1fr;
+      }
       .nav-bar{
         gap:6px;
       }
       .nav-btn{
         padding:7px 12px;
         font-size:14px;
-      }
-      .form-row{
-        grid-template-columns:1fr;
-      }
-      .card-box{
-        padding:20px 16px;
-      }
-      .bottom-bar{
-        flex-direction:column;
-        gap:14px;
-        align-items:flex-start;
       }
     }
   </style>
@@ -167,73 +171,197 @@
 </div>
 
 <div class="container">
-  <div class="back-link">
-    <a href="analysis.html">← 返回分析功能页面</a>
+  <div class="back-home">
+    <a href="index.html">← 返回平台首页</a>
   </div>
-  <h2>基因型数据完整上传</h2>
-  <div class="card-box">
-    <form>
-      <div class="form-row">
-        <div class="form-item">
-          <label>数据名称 <span class="red">*</span></label>
-          <input type="text" placeholder="请输入数据名称" required>
+  <h2>分析功能模块</h2>
+  <div class="grid-wrap">
+    <!-- 表型数据处理 -->
+    <div class="block" id="block-phe">
+      <h3>📊 表型数据处理</h3>
+      <div class="item">
+        <button class="btn-small" onclick="location.href='upload-pheno.html'">打开完整表型上传页面</button>
+      </div>
+      <div class="item">
+        参数设置
+        <div class="param-group">
+          <div class="check-item">
+            <input type="checkbox" id="phe_filter_miss">
+            <label for="phe_filter_miss">缺失值过滤（缺失率＞0.3剔除）</label>
+          </div>
+          <div class="check-item">
+            <input type="checkbox" id="phe_norm">
+            <label for="phe_norm">表型正态化转换</label>
+          </div>
         </div>
-        <div class="form-item">
-          <label>芯片类型 <span class="red">*</span></label>
-          <select required>
-            <option value="">请选择</option>
-            <option>Illumina PorcineSNP60</option>
-            <option>Affymetrix Axiom Porcine</option>
-            <option>定制芯片</option>
-            <option>全基因组测序</option>
-            <option>其他</option>
+      </div>
+      <button class="btn-export">执行处理并导出本模块数据</button>
+    </div>
+
+    <!-- 基因型数据处理 -->
+    <div class="block" id="block-geno">
+      <h3>🧬 基因型数据处理</h3>
+      <div class="item">
+        <button class="btn-small" onclick="location.href='upload-geno.html'">打开完整基因型上传页面</button>
+      </div>
+      <div class="item">
+        参数设置
+        <div class="param-group">
+          <label>最小等位基因频率(MAF)</label>
+          <select>
+            <option>剔除MAF小于1%</option>
+            <option selected>剔除MAF小于5%</option>
+          </select>
+          <label>个体缺失率</label>
+          <select>
+            <option>剔除高于5%</option>
+            <option selected>剔除高于10%</option>
+          </select>
+          <div class="check-item">
+            <input type="checkbox" id="geno_hwe">
+            <label for="geno_hwe">哈代‑温伯格平衡检验（剔除P＜1e‑6的SNP）</label>
+          </div>
+        </div>
+      </div>
+      <button class="btn-export">执行处理并导出本模块数据</button>
+    </div>
+
+    <div class="block" id="block-rna">
+      <h3>📜 RNAseq数据处理</h3>
+      <div class="item">
+        RNA‑seq表达矩阵输入
+        <input type="file">
+      </div>
+      <div class="item">
+        参数设置
+        <div class="param-group">
+          <div class="check-item">
+            <input type="checkbox" id="rna_filter_sample">
+            <label for="rna_filter_sample">剔除低质量样本（比对率低于80%）</label>
+          </div>
+          <div class="check-item">
+            <input type="checkbox" id="rna_filter_gene">
+            <label for="rna_filter_gene">去除低表达基因（超过50%样本中表达量为0）</label>
+          </div>
+          <div class="check-item">
+            <input type="checkbox" id="rna_normalize">
+            <label for="rna_normalize">基因表达量标准化</label>
+          </div>
+          <label>标准化方法</label>
+          <select>
+            <option>TPM</option>
+            <option>FPKM</option>
+          </select>
+          <div class="check-item">
+            <input type="checkbox" id="rna_batch">
+            <label for="rna_batch">校正批次效应</label>
+          </div>
+          <label>批次校正方法</label>
+          <select>
+            <option>ComBat</option>
+            <option>PEER</option>
           </select>
         </div>
-        <div class="form-item">
-          <label>数据来源 <span class="red">*</span></label>
-          <input type="text" placeholder="请输入数据来源" required>
+      </div>
+      <button class="btn-export">执行处理并导出本模块数据</button>
+    </div>
+    <div class="block" id="block-pred">
+      <h3>🔮 表达量预测</h3>
+      <div class="item">
+        RNA‑seq数据输入（用于训练权重）
+        <input type="file">
+      </div>
+      <div class="item">
+        预处理后基因型输入
+        <input type="file">
+      </div>
+      <div class="item">
+        <label>预测模型选择</label>
+        <select>
+          <option selected>Elastic Net</option>
+        </select>
+      </div>
+      <button class="btn-export">执行预测并导出本模块数据</button>
+    </div>
+    <div class="block" id="block-gwas">
+      <h3>📈 GWAS分析<br />(单性状动物模型 / 随机回归模型)</h3>
+      <div class="item">
+        预处理后表型输入
+        <input type="file">
+      </div>
+      <div class="item">
+        预处理后基因型输入
+        <input type="file">
+      </div>
+      <div class="item">
+        参数设置
+        <div class="param-group">
+          <label>GWAS模型选择</label>
+          <select>
+            <option>单性状动物模型</option>
+            <option>随机回归模型</option>
+          </select>
         </div>
-        <div class="form-item">
-          <label>样本数量 <span class="red">*</span></label>
-          <input type="number" placeholder="请输入样本数量" required>
+      </div>
+      <button class="btn-export">执行分析并导出本模块数据</button>
+    </div>
+    <div class="block" id="block-twas">
+      <h3>🧪 TWAS分析(常规 / 纵向)</h3>
+      <div class="item">
+        GWAS结果文件输入
+        <input type="file">
+      </div>
+      <div class="item">
+        预测GReX表达文件输入
+        <input type="file">
+      </div>
+      <div class="item">
+        参数设置
+        <div class="param-group">
+          <label>TWAS模式选择</label>
+          <select>
+            <option>常规TWAS</option>
+            <option>纵向TWAS</option>
+          </select>
         </div>
       </div>
-      <div class="form-item" style="margin-bottom:18px;">
-        <label>检测时间 <span class="red">*</span></label>
-        <input type="date" required>
-      </div>
-      <div class="form-item" style="margin-bottom:18px;">
-        <label>数据描述 <span class="red">*</span></label>
-        <textarea placeholder="请详细描述数据的检测方法、处理过程、包含的SNP数量等信息" required></textarea>
-      </div>
-      <div class="form-item">
-        <label>数据文件 <span class="red">*</span></label>
-        <div class="upload-area">
-          <p>点击或拖拽文件到此处上传</p>
-          <p class="tip">支持 PLINK、VCF、HAPMAP 格式，单个文件不超过 500MB</p>
-          <input type="file" multiple accept=".bed,.bim,.fam,.vcf,.vcf.gz,.hapmap" style="margin-top:12px;" required>
-        </div>
-      </div>
-      <div class="bottom-bar">
-        <div class="check-wrap">
-          <input type="checkbox" required id="agreeGeno">
-          <label for="agreeGeno">我已阅读并同意数据上传协议</label>
-        </div>
-        <button class="btn-normal" type="submit">提交上传</button>
-      </div>
-    </form>
+      <button class="btn-export">执行处理并导出本模块数据</button>
+    </div>
   </div>
 </div>
-
 <script>
+document.querySelectorAll('.btn-export').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    if(!this.disabled){
+      alert(this.innerText + "，前端触发，后端接口待对接");
+    }
+  })
+})
+const urlParams = new URLSearchParams(window.location.search);
+const mod = urlParams.get('module');
+if(mod){
+  const targetDom = document.getElementById('block-' + mod);
+  if(targetDom){
+    targetDom.classList.add('block-zoom');
+    setTimeout(()=>{
+      targetDom.classList.remove('block-zoom');
+    },1200);
+  }
+}
+
+//导航激活：访问analysis.html，【数据上传】按钮自动白底黑字
 (function(){
   const path = window.location.pathname;
   const btns = document.querySelectorAll(".nav-btn");
   btns.forEach(b=>{
     const t = b.dataset.target;
-    if(t==="intro" && path.includes("intro.html")) b.classList.add("active");
-    if(t==="analysis" && path.includes("analysis.html")) b.classList.add("active");
-    if(t==="result" && path.includes("result.html")) b.classList.add("active");
+    if((t==="intro" && path.endsWith("intro.html"))){
+      b.classList.add("active");
+    }else if((t==="analysis" && path.endsWith("analysis.html"))){
+      b.classList.add("active");
+    }else if((t==="result" && path.endsWith("result.html"))){
+      b.classList.add("active");
+    }
   })
 })()
 </script>
