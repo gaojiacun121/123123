@@ -34,6 +34,7 @@
       color:#ffffff;
       transition:0.24s ease;
     }
+    /* 当前页激活样式：白底黑字 */
     .nav-btn.active{
       background:#ffffff;
       color:#222222;
@@ -133,21 +134,24 @@
       font-size:14px;
       margin-top: auto;
     }
+    /* a标签伪装按钮，解决跳转失效 */
     .btn-small{
+      display:block;
       width:100%;
-      padding:7px;
+      padding:9px;
       background:#ffffff;
       color:#2980b9;
       border:1px solid #2980b9;
       border-radius:4px;
       cursor:pointer;
-      font-size:13px;
-      margin-top:8px;
+      font-size:14px;
+      margin:6px 0;
+      text-align:center;
+      text-decoration:none;
     }
-    .upload-desc{
-      font-size:12px;
-      color:#666;
-      margin:4px 0 8px;
+    .btn-small:hover{
+      background:#2980b9;
+      color:#fff;
     }
     @media(max-width:768px){
       .grid-wrap{
@@ -176,14 +180,11 @@
   </div>
   <h2>分析功能模块</h2>
   <div class="grid-wrap">
-    <!-- 表型数据处理（集成上传） -->
+    <!-- 表型数据处理【修复：改用a标签跳转】 -->
     <div class="block" id="block-phe">
       <h3>📊 表型数据处理</h3>
       <div class="item">
-        表型数据文件输入
-        <input type="file" accept=".xlsx,.xls,.csv,.txt">
-        <div class="upload-desc">支持Excel、CSV、TXT格式</div>
-        <button class="btn-small" onclick="location.href='upload-pheno.html'">打开完整表型上传页面</button>
+        <a class="btn-small" href="upload-pheno.html">打开完整表型上传页面</a>
       </div>
       <div class="item">
         参数设置
@@ -200,14 +201,12 @@
       </div>
       <button class="btn-export">执行处理并导出本模块数据</button>
     </div>
-    <!-- 基因型数据处理（集成上传） -->
+
+    <!-- 基因型数据处理【修复：改用a标签跳转】 -->
     <div class="block" id="block-geno">
       <h3>🧬 基因型数据处理</h3>
       <div class="item">
-        基因型文件输入
-        <input type="file" multiple accept=".bed,.bim,.fam,.vcf,.vcf.gz,.hapmap">
-        <div class="upload-desc">支持PLINK、VCF、HAPMAP格式</div>
-        <button class="btn-small" onclick="location.href='upload-geno.html'">打开完整基因型上传页面</button>
+        <a class="btn-small" href="upload-geno.html">打开完整基因型上传页面</a>
       </div>
       <div class="item">
         参数设置
@@ -230,6 +229,7 @@
       </div>
       <button class="btn-export">执行处理并导出本模块数据</button>
     </div>
+
     <div class="block" id="block-rna">
       <h3>📜 RNAseq数据处理</h3>
       <div class="item">
@@ -285,7 +285,7 @@
           <option selected>Elastic Net</option>
         </select>
       </div>
-      <button class="btn-export">执行预测并导出本模块数据</button>
+      <button class="btn-export">执行处理并导出本模块数据</button>
     </div>
     <div class="block" id="block-gwas">
       <h3>📈 GWAS分析<br />(单性状动物模型 / 随机回归模型)</h3>
@@ -309,7 +309,7 @@
       </div>
       <button class="btn-export">执行分析并导出本模块数据</button>
     </div>
-    <div class="block" id="block‑twas">
+    <div class="block" id="block-twas">
       <h3>🧪 TWAS分析(常规 / 纵向)</h3>
       <div class="item">
         GWAS结果文件输入
@@ -329,12 +329,12 @@
           </select>
         </div>
       </div>
-      <button class="btn-export">执行分析并导出本模块数据</button>
+      <button class="btn-export">执行处理并导出本模块数据</button>
     </div>
   </div>
 </div>
 <script>
-document.querySelectorAll('.btn‑export').forEach(btn=>{
+document.querySelectorAll('.btn-export').forEach(btn=>{
   btn.addEventListener('click',function(){
     if(!this.disabled){
       alert(this.innerText + "，前端触发，后端接口待对接");
@@ -344,22 +344,29 @@ document.querySelectorAll('.btn‑export').forEach(btn=>{
 const urlParams = new URLSearchParams(window.location.search);
 const mod = urlParams.get('module');
 if(mod){
-  const targetDom = document.getElementById('block‑' + mod);
+  const targetDom = document.getElementById('block-' + mod);
   if(targetDom){
-    targetDom.classList.add('block‑zoom');
+    targetDom.classList.add('block-zoom');
     setTimeout(()=>{
-      targetDom.classList.remove('block‑zoom');
+      targetDom.classList.remove('block-zoom');
     },1200);
   }
 }
+
+//导航激活判断，data‑target匹配文件名结尾
 (function(){
   const path = window.location.pathname;
-  const btns = document.querySelectorAll(".nav‑btn");
+  const btns = document.querySelectorAll(".nav-btn");
   btns.forEach(b=>{
     const t = b.dataset.target;
-    if(t==="intro" && path.includes("intro.html")) b.classList.add("active");
-    if(t==="analysis" && path.includes("analysis.html")) b.classList.add("active");
-    if(t==="result" && path.includes("result.html")) b.classList.add("active");
+    b.classList.remove("active");
+    if((t==="intro" && path.endsWith("intro.html"))){
+      b.classList.add("active");
+    }else if((t==="analysis" && path.endsWith("analysis.html"))){
+      b.classList.add("active");
+    }else if((t==="result" && path.endsWith("result.html"))){
+      b.classList.add("active");
+    }
   })
 })()
 </script>
