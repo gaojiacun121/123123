@@ -11,18 +11,104 @@
       box-sizing: border-box;
       font-family: "Microsoft Yahei", system-ui, sans-serif;
     }
+
+    html, body {
+      min-height: 100vh;
+      color: #e0f2fe;
+    }
+
+    .page-wrap {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      padding-top: 70px;
+      padding-bottom: 40px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 22% 16%, rgba(72, 178, 230, 0.4), transparent 32%),
+        radial-gradient(circle at 78% 84%, rgba(41, 128, 185, 0.35), transparent 36%),
+        linear-gradient(140deg, #092342 0%, #103666 45%, #1a4b88 100%);
+      z-index: 0;
+    }
+
+    /* 网格底纹 */
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(80, 180, 240, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(80, 180, 240, 0.07) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.7) 45%, transparent 75%);
+    }
+
+    /* 弥散粒子 */
+    .soft-particles {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 12% 22%, rgba(130, 210, 255, 0.7) 1px, transparent 2px),
+        radial-gradient(circle at 86% 30%, rgba(130, 210, 255, 0.6) 1px, transparent 2px),
+        radial-gradient(circle at 34% 76%, rgba(130, 210, 255, 0.55) 1px, transparent 2px),
+        radial-gradient(circle at 70% 82%, rgba(130, 210, 255, 0.65) 1px, transparent 2px);
+      background-size: 240px 240px, 280px 280px, 300px 300px, 260px 260px;
+      opacity: 0.45;
+    }
+
+    /* 横向扫描线 */
+    .scan-line-h {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #48b2e6, transparent);
+      z-index: 0;
+      pointer-events: none;
+      animation: scanH 7s ease-in-out infinite;
+    }
+    .scan-line-h.s1 { top: 26%; }
+    .scan-line-h.s2 { top: 64%; animation-delay: 3.5s; }
+    @keyframes scanH {
+      0% { transform: translateX(-40%); opacity: 0; }
+      50% { opacity: 0.7; }
+      100% { transform: translateX(40%); opacity: 0; }
+    }
+
+    /* 四角HUD短角标 */
+    .hud-corner-mark {
+      position: absolute;
+      width: 72px;
+      height: 72px;
+      pointer-events: none;
+      z-index: 1;
+      border-color: rgba(72, 178, 230, 0.4);
+      border-style: solid;
+      border-width: 0;
+    }
+    .hud-corner-mark.tl { top: 80px; left: 16px; border-top-width:2px; border-left-width:2px; }
+    .hud-corner-mark.tr { top: 80px; right:16px; border-top-width:2px; border-right-width:2px; }
+    .hud-corner-mark.bl { bottom:40px; left:16px; border-bottom-width:2px; border-left-width:2px; }
+    .hud-corner-mark.br { bottom:40px; right:16px; border-bottom-width:2px; border-right-width:2px; }
+
+    /* 导航栏 */
     .nav-bar{
       position:fixed;
       top:0;
       left:0;
       width:100%;
       z-index:999;
-      background:rgba(255,255,255,0.7);
-      backdrop-filter: blur(6px);
+      background:rgba(226, 242, 255, 0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       padding:12px 20px;
       display:flex;
       justify-content:center;
       gap:12px;
+      border-bottom:1px solid rgba(125, 211, 252, 0.25);
     }
     .nav-btn{
       padding:8px 22px;
@@ -34,28 +120,38 @@
       color:#ffffff;
       transition:0.24s ease;
     }
+    .nav-btn:hover:not(.active):not(.btn-upload-fixed){
+      background:#1f6d99;
+    }
     .nav-btn.active{
       background:#ffffff;
       color:#222222;
       box-shadow:0 2px 6px rgba(0,0,0,0.12);
     }
-    .nav-btn:hover:not(.active){
-      background:#1f6d99;
+    .btn-upload-fixed{
+      background:#ffffff !important;
+      color:#222222 !important;
+      border:1px solid rgba(56, 189, 248, 0.45) !important;
+      box-shadow:0 4px 14px rgba(41, 128, 185, 0.15) !important;
     }
-    body {
-      background-color: #f5f7fa;
-      padding:70px 20px 40px;
-      color: #2c3e50;
+    .btn-upload-fixed:hover{
+      background:#f7fbff !important;
+      color:#165DFF !important;
     }
+
+    /* 主体容器 */
     .container {
+      position:relative;
+      z-index:3;
       max-width:900px;
       margin: 0 auto;
+      padding:0 20px;
     }
     .back-link{
       margin-bottom:24px;
     }
     .back-link a{
-      color:#2980b9;
+      color:#7dd3fc;
       text-decoration:none;
     }
     .back-link a:hover{
@@ -65,14 +161,34 @@
       text-align: center;
       margin-bottom: 28px;
       font-size:24px;
-      color:#154366;
+      color:#e0f2fe;
+      text-shadow:0 0 14px rgba(72,178,230,0.5);
     }
+
+    /* 表单卡片 控制台面板 */
     .card-box{
-      background:#ffffff;
-      border-radius:12px;
+      background:linear-gradient(145deg, rgba(12,42,78,0.65), rgba(18,58,104,0.55));
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border:1px solid rgba(72,178,230,0.38);
+      border-radius:16px;
       padding:28px;
-      box-shadow:0 2px 12px rgba(41,128,185,0.08);
+      box-shadow: 0 0 22px rgba(41,128,185,0.18), inset 0 0 18px rgba(56,189,248,0.08);
+      position:relative;
     }
+    .card-box::before,
+    .card-box::after{
+      content:"";
+      position:absolute;
+      width:26px;
+      height:26px;
+      border-color:rgba(72,178,230,0.55);
+      border-style:solid;
+      border-width:0;
+    }
+    .card-box::before{ top:0; left:0; border-top-width:2px; border-left-width:2px; }
+    .card-box::after{ bottom:0; right:0; border-bottom-width:2px; border-right-width:2px; }
+
     .form-row{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -86,44 +202,92 @@
     label{
       font-size:14px;
       margin-bottom:6px;
+      color:#b9e3f8;
     }
     label .red{
-      color:#dc3545;
+      color:#ff7b8c;
     }
-    input,select,textarea{
-      padding:8px 10px;
-      border:1px solid #d2d9e0;
-      border-radius:6px;
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea{
+      padding:9px 11px;
+      border:1px solid rgba(72,178,230,0.4);
+      border-radius:8px;
       font-size:14px;
+      background:rgba(20,52,88,0.45);
+      color:#e0f2fe;
+    }
+    select option{
+      background:#0f2e52;
+      color:#e0f2fe;
     }
     textarea{
       min-height:120px;
       resize:vertical;
     }
+
+    /* 拖拽上传区域 */
     .upload-area{
-      border:2px dashed #d2d9e0;
-      border-radius:8px;
+      border:2px dashed rgba(72,178,230,0.42);
+      border-radius:10px;
       padding:32px 16px;
       text-align:center;
       margin:8px 0 18px;
+      background:rgba(22,60,98,0.3);
+      transition:0.3s ease;
+    }
+    .upload-area:hover{
+      border-color:rgba(72,178,230,0.85);
+      box-shadow:0 0 20px rgba(72,178,230,0.22);
+      background:rgba(26,70,114,0.42);
+    }
+    .upload-area p{
+      color:#b9e3f8;
     }
     .upload-area .tip{
       font-size:13px;
-      color:#666;
+      color:#88b8d8;
       margin-top:8px;
     }
-    .btn-normal{
-      padding:9px 24px;
+
+    /* 文件选择按钮蓝色 */
+    input[type="file"]{
+      color:#e0f2fe;
+    }
+    input[type="file"]::file-selector-button{
+      padding:7px 16px;
+      margin-right:12px;
       border:none;
       border-radius:6px;
-      background:#2980b9;
+      background:linear-gradient(135deg, #38bdf8, #2563eb);
+      color:#ffffff;
+      font-size:14px;
+      cursor:pointer;
+      transition:0.25s ease;
+    }
+    input[type="file"]::file-selector-button:hover{
+      background:linear-gradient(135deg, #0ea5e9, #1d4ed8);
+    }
+
+    .btn-normal{
+      padding:10px 26px;
+      border:none;
+      border-radius:8px;
+      background:linear-gradient(135deg,#2980b9,#1f6d99);
       color:#fff;
       cursor:pointer;
       font-size:14px;
+      box-shadow:0 0 12px rgba(41,128,185,0.25);
+      transition:0.24s ease;
     }
     .btn-normal:hover{
-      background:#1f6d99;
+      background:linear-gradient(135deg,#1f6d99,#164e75);
+      box-shadow:0 0 18px rgba(41,128,185,0.38);
     }
+
     .bottom-bar{
       display:flex;
       justify-content:space-between;
@@ -135,15 +299,20 @@
       align-items:center;
       gap:6px;
       font-size:14px;
+      color:#b9e3f8;
+    }
+    input[type="checkbox"]{
+      accent-color:#48b2e6;
+    }
+
+    @media(max-width:992px){
+      .hud-corner-mark{display:none;}
+      .scan-line-h{display:none;}
     }
     @media(max-width:768px){
-      .nav-bar{
-        gap:6px;
-      }
-      .nav-btn{
-        padding:7px 12px;
-        font-size:14px;
-      }
+      .page-wrap{padding-bottom:20px;padding-top:64px;}
+      .nav-bar{gap:6px;padding:10px 12px;}
+      .nav-btn{padding:7px 12px;font-size:14px;}
       .form-row{
         grid-template-columns:1fr;
       }
@@ -155,83 +324,100 @@
         gap:14px;
         align-items:flex-start;
       }
+      .soft-particles{opacity:0.25;}
     }
   </style>
 </head>
 <body>
-<div class="nav-bar">
-  <button class="nav-btn" data-target="intro" onclick="location.href='intro.html'">平台介绍</button>
-  <button class="nav-btn" data-target="analysis" onclick="location.href='analysis.html'">数据上传</button>
-  <button class="nav-btn" data-target="result" onclick="location.href='result.html'">结果展示</button>
-</div>
-<div class="container">
-  <div class="back-link">
-    <a href="analysis.html">← 返回分析功能页面</a>
+<div class="page-wrap">
+  <div class="grid-bg"></div>
+  <div class="soft-particles"></div>
+
+  <div class="scan-line-h s1" aria-hidden="true"></div>
+  <div class="scan-line-h s2" aria-hidden="true"></div>
+
+  <div class="hud-corner-mark tl" aria-hidden="true"></div>
+  <div class="hud-corner-mark tr" aria-hidden="true"></div>
+  <div class="hud-corner-mark bl" aria-hidden="true"></div>
+  <div class="hud-corner-mark br" aria-hidden="true"></div>
+
+  <div class="nav-bar">
+    <button class="nav-btn" data-target="intro" onclick="location.href='intro.html'">平台介绍</button>
+    <button class="nav-btn btn-upload-fixed" data-target="analysis" onclick="location.href='analysis.html'">数据上传</button>
+    <button class="nav-btn" data-target="result" onclick="location.href='result.html'">结果展示</button>
   </div>
-  <h2>基因型数据完整上传</h2>
-  <div class="card-box">
-    <form>
-      <div class="form-row">
-        <div class="form-item">
-          <label>数据名称 <span class="red">*</span></label>
-          <input type="text" placeholder="请输入数据名称" required>
+
+  <div class="container">
+    <div class="back-link">
+      <a href="analysis.html">← 返回分析功能页面</a>
+    </div>
+    <h2>基因型数据完整上传</h2>
+    <div class="card-box">
+      <form>
+        <div class="form-row">
+          <div class="form-item">
+            <label>数据名称 <span class="red">*</span></label>
+            <input type="text" placeholder="请输入数据名称" required>
+          </div>
+          <div class="form-item">
+            <label>芯片类型 <span class="red">*</span></label>
+            <select required>
+              <option value="">请选择</option>
+              <option>Illumina PorcineSNP60</option>
+              <option>Affymetrix Axiom Porcine</option>
+              <option>定制芯片</option>
+              <option>全基因组测序</option>
+              <option>其他</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <label>数据来源 <span class="red">*</span></label>
+            <input type="text" placeholder="请输入数据来源" required>
+          </div>
+          <div class="form-item">
+            <label>样本数量 <span class="red">*</span></label>
+            <input type="number" placeholder="请输入样本数量" required>
+          </div>
+        </div>
+        <div class="form-item" style="margin-bottom:18px;">
+          <label>检测时间 <span class="red">*</span></label>
+          <input type="date" required>
+        </div>
+        <div class="form-item" style="margin-bottom:18px;">
+          <label>数据描述 <span class="red">*</span></label>
+          <textarea placeholder="请详细描述数据的检测方法、处理过程、包含的SNP数量等信息" required></textarea>
         </div>
         <div class="form-item">
-          <label>芯片类型 <span class="red">*</span></label>
-          <select required>
-            <option value="">请选择</option>
-            <option>Illumina PorcineSNP60</option>
-            <option>Affymetrix Axiom Porcine</option>
-            <option>定制芯片</option>
-            <option>全基因组测序</option>
-            <option>其他</option>
-          </select>
+          <label>数据文件 <span class="red">*</span></label>
+          <div class="upload-area">
+            <p>点击或拖拽文件到此处上传</p>
+            <p class="tip">支持 PLINK、VCF、HAPMAP 格式，单个文件不超过 500MB</p>
+            <input type="file" multiple accept=".bed,.bim,.fam,.vcf,.vcf.gz,.hapmap" style="margin-top:12px;" required>
+          </div>
         </div>
-        <div class="form-item">
-          <label>数据来源 <span class="red">*</span></label>
-          <input type="text" placeholder="请输入数据来源" required>
+        <div class="bottom-bar">
+          <div class="check-wrap">
+            <input type="checkbox" required id="agreeGeno">
+            <label for="agreeGeno">我已阅读并同意数据上传协议</label>
+          </div>
+          <button class="btn-normal" type="submit">提交上传</button>
         </div>
-        <div class="form-item">
-          <label>样本数量 <span class="red">*</span></label>
-          <input type="number" placeholder="请输入样本数量" required>
-        </div>
-      </div>
-      <div class="form-item" style="margin-bottom:18px;">
-        <label>检测时间 <span class="red">*</span></label>
-        <input type="date" required>
-      </div>
-      <div class="form-item" style="margin-bottom:18px;">
-        <label>数据描述 <span class="red">*</span></label>
-        <textarea placeholder="请详细描述数据的检测方法、处理过程、包含的SNP数量等信息" required></textarea>
-      </div>
-      <div class="form-item">
-        <label>数据文件 <span class="red">*</span></label>
-        <div class="upload-area">
-          <p>点击或拖拽文件到此处上传</p>
-          <p class="tip">支持 PLINK、VCF、HAPMAP 格式，单个文件不超过 500MB</p>
-          <input type="file" multiple accept=".bed,.bim,.fam,.vcf,.vcf.gz,.hapmap" style="margin-top:12px;" required>
-        </div>
-      </div>
-      <div class="bottom-bar">
-        <div class="check-wrap">
-          <input type="checkbox" required id="agreeGeno">
-          <label for="agreeGeno">我已阅读并同意数据上传协议</label>
-        </div>
-        <button class="btn-normal" type="submit">提交上传</button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
+
 <script>
 (function(){
   const path = window.location.pathname;
   const btns = document.querySelectorAll(".nav-btn");
   btns.forEach(b=>{
     const t = b.dataset.target;
+    if(b.classList.contains("btn-upload-fixed")) return;
     b.classList.remove("active");
-    if(t==="intro" && path.endsWith("intro.html")) b.classList.add("active");
-    if(t==="analysis" && path.endsWith("analysis.html")) b.classList.add("active");
-    if(t==="result" && path.endsWith("result.html")) b.classList.add("active");
+    if(t==="intro" && path.includes("intro.html")) b.classList.add("active");
+    if(t==="analysis" && path.includes("analysis.html")) b.classList.add("active");
+    if(t==="result" && path.includes("result.html")) b.classList.add("active");
   })
 })()
 </script>

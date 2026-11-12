@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>平台分析功能 | 纵向性状全转录组关联分析精细定位计算平台</title>
+  <title>纵向性状全转录组关联分析精细定位计算平台</title>
   <style>
     * {
       margin: 0;
@@ -11,364 +11,897 @@
       box-sizing: border-box;
       font-family: "Microsoft Yahei", system-ui, sans-serif;
     }
-    .nav-bar{
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      z-index:999;
-      background:rgba(255,255,255,0.7);
-      backdrop-filter: blur(6px);
-      padding:12px 20px;
-      display:flex;
-      justify-content:center;
-      gap:12px;
-    }
-    .nav-btn{
-      padding:8px 22px;
-      border:none;
-      border-radius:8px;
-      font-size:15px;
-      cursor:pointer;
-      background:#2980b9;
-      color:#ffffff;
-      transition:0.24s ease;
-    }
-    /* 当前页激活样式：白底黑字 */
-    .nav-btn.active{
-      background:#ffffff;
-      color:#222222;
-      box-shadow:0 2px 6px rgba(0,0,0,0.12);
-    }
-    .nav-btn:hover:not(.active){
-      background:#1f6d99;
-    }
-
-    body {
-      background-color: #f5f7fa;
-      padding:70px 20px 40px;
+    html, body {
+      height: 100%;
       color: #2c3e50;
     }
-    .container {
-      max-width: 1240px;
-      margin: 0 auto;
-    }
-    .back-home{
-      margin-bottom:20px;
-    }
-    .back-home a{
-      color:#2980b9;
-      text-decoration:none;
-    }
-    .back-home a:hover{
-      text-decoration:underline;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 28px;
-      font-size:24px;
-    }
-    .grid-wrap {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    .block {
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 18px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    .home-banner {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
       display: flex;
       flex-direction: column;
-      height: 100%;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      align-items: center;
+      padding: 32px 24px 240px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(125, 211, 252, 0.55), transparent 30%),
+        radial-gradient(circle at 82% 8%, rgba(96, 165, 250, 0.45), transparent 34%),
+        radial-gradient(circle at 75% 88%, rgba(56, 189, 248, 0.5), transparent 36%),
+        radial-gradient(circle at 25% 92%, rgba(147, 197, 253, 0.45), transparent 32%),
+        linear-gradient(135deg, #0b2a4a 0%, #134074 25%, #1a5a9e 55%, #2f80c6 80%, #58a6e0 100%);
+      z-index: 0;
     }
-    .block.block-zoom{
-      transform: scale(1.03);
-      box-shadow:0 6px 20px rgba(41,128,185,0.22);
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(125, 211, 252, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(125, 211, 252, 0.08) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.65) 40%, transparent 75%);
     }
-    .block h3 {
-      font-size: 16px;
-      margin-bottom: 12px;
-      padding-left: 8px;
-      border-left: 4px solid #2980b9;
+
+    /* 漂浮粒子动画 */
+    .particles {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.9) 1px, transparent 2px),
+        radial-gradient(circle at 20% 70%, rgba(186,230,253,0.8) 1px, transparent 2px),
+        radial-gradient(circle at 35% 40%, rgba(255,255,255,0.7) 1px, transparent 2px),
+        radial-gradient(circle at 50% 85%, rgba(125,211,252,0.9) 1px, transparent 2px),
+        radial-gradient(circle at 65% 25%, rgba(147,197,253,0.8) 1px, transparent 2px),
+        radial-gradient(circle at 80% 55%, rgba(255,255,255,0.8) 1px, transparent 2px),
+        radial-gradient(circle at 90% 15%, rgba(191,219,254,0.9) 1px, transparent 2px),
+        radial-gradient(circle at 88% 80%, rgba(125,211,252,0.75) 1px, transparent 2px);
+      background-size: 260px 260px, 320px 320px, 280px 280px, 340px 340px, 300px 300px, 270px 270px, 310px 310px, 290px 290px;
+      opacity: 0.55;
+      animation: floatParticle 25s ease-in-out infinite alternate;
     }
-    .item {
-      font-size: 13px;
-      padding: 8px 0;
-      border-bottom: 1px dashed #e4e9ee;
+    @keyframes floatParticle{
+      0%{transform:translateY(0px) translateX(0px);}
+      50%{transform:translateY(-25px) translateX(12px);}
+      100%{transform:translateY(8px) translateX(-10px);}
     }
-    .item:last-child {
+
+    .scan-light {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 180px;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(125, 211, 252, 0.35), transparent);
+    }
+
+    /* 全屏横向扫描光带 */
+    .full-scan-strip{
+      position:absolute;
+      top:0;
+      left:-120%;
+      width:120%;
+      height:3px;
+      background:linear-gradient(90deg,transparent,rgba(125,211,252,0.65),transparent);
+      z-index:1;
+      pointer-events:none;
+      animation:fullScan 9s linear infinite;
+    }
+    @keyframes fullScan{
+      0%{left:-120%;top:10%;}
+      50%{top:50%;}
+      100%{left:120%;top:90%;}
+    }
+
+    .dna-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .dna-bg svg {
+      position: absolute;
+      filter: drop-shadow(0 0 10px rgba(125, 211, 252, 0.75));
+    }
+    /* DNA旋转动画 */
+    .dna-bg .dna-1 {
+      top: -80px;
+      left: -120px;
+      width: 460px;
+      height: 460px;
+      transform: rotate(-10deg);
+      opacity: 0.55;
+      animation:dnaRotate1 70s linear infinite;
+    }
+    .dna-bg .dna-2 {
+      top: 140px;
+      right: -140px;
+      width: 560px;
+      height: 560px;
+      transform: rotate(14deg);
+      opacity: 0.45;
+      animation:dnaRotate2 85s linear infinite reverse;
+    }
+    .dna-bg .dna-3 {
+      bottom: -100px;
+      left: 18%;
+      width: 420px;
+      height: 420px;
+      transform: rotate(-6deg);
+      opacity: 0.4;
+      animation:dnaRotate1 75s linear infinite;
+    }
+    .dna-bg .dna-4 {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 780px;
+      height: 780px;
+      opacity: 0.18;
+      animation:dnaRotate2 100s linear infinite reverse;
+    }
+    @keyframes dnaRotate1{
+      0%{transform:rotate(-10deg);}
+      100%{transform:rotate(350deg);}
+    }
+    @keyframes dnaRotate2{
+      0%{transform:rotate(14deg);}
+      100%{transform:rotate(-346deg);}
+    }
+
+    .molecules {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+    .molecules svg {
+      position: absolute;
+      color: #bae6fd;
+    }
+    .molecules .mol-1 { top: 8%; left: 42%; width: 90px; height: 90px; }
+    .molecules .mol-2 { top: 60%; left: 8%; width: 110px; height: 110px; }
+    .molecules .mol-3 { top: 30%; left: 72%; width: 80px; height: 80px; }
+    .molecules .mol-4 { bottom: 12%; left: 40%; width: 100px; height: 100px; }
+
+    .hud-panel {
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
+      border: 1px solid rgba(125, 211, 252, 0.35);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.18), rgba(59, 130, 246, 0.08));
+      box-shadow:
+        inset 0 0 24px rgba(56, 189, 248, 0.25),
+        0 0 22px rgba(56, 189, 248, 0.18);
+      backdrop-filter: blur(4px);
+    }
+    .hud-panel::before,
+    .hud-panel::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #7dd3fc;
+    }
+    .hud-panel::before {
+      top: -1px;
+      left: -1px;
+      border-right: none;
       border-bottom: none;
     }
-    input, select {
+    .hud-panel::after {
+      bottom: -1px;
+      right: -1px;
+      border-left: none;
+      border-top: none;
+    }
+    .hud-1 { top: 10%; left: 4%; width: 150px; height: 150px; }
+    .hud-2 { top: 18%; right: 5%; width: 180px; height: 180px; }
+    .hud-3 { bottom: 260px; left: 6%; width: 160px; height: 160px; }
+    .hud-4 { bottom: 280px; right: 4%; width: 200px; height: 200px; }
+    .hud-title {
+      position: absolute;
+      top: 10px;
+      left: 14px;
+      font-size: 12px;
+      color: #bae6fd;
+      letter-spacing: 1px;
+      opacity: 0.85;
+    }
+    .hud-wave {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      height: 40px;
+      overflow:hidden;
+    }
+    .hud-wave-path{
+      animation:waveScroll 6s linear infinite;
+    }
+    @keyframes waveScroll{
+      0%{transform:translateX(0px);}
+      100%{transform:translateX(-120px);}
+    }
+    .hud-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70%;
+      height: 70%;
+      border-radius: 50%;
+      border: 1px dashed rgba(125, 211, 252, 0.5);
+      animation:circlePulse 4s ease-in-out infinite;
+    }
+    @keyframes circlePulse{
+      0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.4;}
+      50%{transform:translate(-50%,-50%) scale(1.12);opacity:0.7;}
+    }
+    .hud-circle::before {
+      content: "";
+      position: absolute;
+      inset: 14%;
+      border-radius: 50%;
+      border: 1px solid rgba(125, 211, 252, 0.4);
+    }
+    .hud-circle::after {
+      content: "";
+      position: absolute;
+      inset: 28%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.45), transparent 70%);
+    }
+
+    .container {
+      position: relative;
+      z-index: 3;
       width: 100%;
-      margin: 6px 0;
-      padding: 6px;
-      border: 1px solid #d2d9e0;
-      border-radius: 4px;
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 20px;
     }
-    .param-group{
-      padding-left:10px;
-      margin:8px 0;
-      flex-grow:1;
+    .home-content {
+      background: linear-gradient(135deg, rgba(15, 58, 110, 0.55), rgba(30, 90, 160, 0.45));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 40px 48px;
+      border-radius: 24px;
+      box-shadow:
+        0 18px 48px rgba(2, 12, 35, 0.45),
+        inset 0 1px 0 rgba(125, 211, 252, 0.6);
+      border: 1px solid rgba(125, 211, 252, 0.4);
+      text-align: center;
+      animation: fadeIn 0.9s ease-out;
+      margin-bottom: 26px;
+      position: relative;
     }
-    .check-item{
-      display:flex;
-      gap:6px;
-      align-items:center;
-      margin:4px 0;
+    .home-content::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 24px;
+      padding: 2px;
+      background: linear-gradient(135deg, rgba(125, 211, 252, 0.9), rgba(59, 130, 246, 0.6), rgba(96, 165, 250, 0.8));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
     }
-    input[type="checkbox"]{
-      width:auto;
-      margin:0;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .btn-export{
-      width:100%;
-      padding:8px 10px;
-      background:#2980b9;
-      color:#fff;
-      border:none;
-      border-radius:4px;
-      cursor:pointer;
-      font-size:14px;
-      margin-top: auto;
+    .home-content h1 {
+      font-size: 30px;
+      margin-bottom: 16px;
+      color: #e0f2fe;
+      line-height: 1.4;
+      text-shadow: 0 0 24px rgba(125, 211, 252, 0.85);
+      letter-spacing: 0.5px;
     }
-    /* a标签伪装按钮，解决跳转失效 */
-    .btn-small{
-      display:block;
-      width:100%;
-      padding:9px;
-      background:#ffffff;
-      color:#2980b9;
-      border:1px solid #2980b9;
-      border-radius:4px;
-      cursor:pointer;
-      font-size:14px;
-      margin:6px 0;
-      text-align:center;
-      text-decoration:none;
+    .home-desc {
+      font-size: 17px;
+      color: #bae6fd;
+      margin-bottom: 28px;
+      line-height: 1.6;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
     }
-    .btn-small:hover{
-      background:#2980b9;
-      color:#fff;
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
-    @media(max-width:768px){
-      .grid-wrap{
-        grid-template-columns:1fr;
-      }
-      .nav-bar{
-        gap:6px;
-      }
-      .nav-btn{
-        padding:7px 12px;
-        font-size:14px;
-      }
+    .btn-enter-platform {
+      display: inline-block;
+      padding: 14px 42px;
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      color: #ffffff;
+      border: 1px solid rgba(125, 211, 252, 0.6);
+      border-radius: 14px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow:
+        0 8px 22px rgba(37, 99, 235, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      letter-spacing: 1px;
+    }
+    .btn-enter-platform:hover {
+      background: linear-gradient(135deg, #0ea5e9, #1d4ed8);
+      transform: translateY(-3px);
+      box-shadow:
+        0 12px 28px rgba(14, 165, 233, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+    .btn-enter-platform:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.5);
+    }
+    .btn-intro {
+      display: inline-block;
+      padding: 14px 42px;
+      background: rgba(15, 58, 110, 0.45);
+      color: #7dd3fc;
+      border: 1px solid rgba(125, 211, 252, 0.7);
+      border-radius: 14px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(8px);
+      letter-spacing: 1px;
+    }
+    .btn-intro:hover {
+      background: rgba(56, 189, 248, 0.25);
+      color: #ffffff;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(56, 189, 248, 0.45);
+      border-color: #7dd3fc;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 21px;
+      color: #e0f2fe;
+      margin-bottom: 18px;
+      text-shadow: 0 0 18px rgba(125, 211, 252, 0.75);
+      letter-spacing: 1px;
+      position: relative;
+    }
+    .section-title::before,
+    .section-title::after {
+      content: "";
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #7dd3fc, transparent);
+      vertical-align: middle;
+      margin: 0 14px;
+    }
+    .func-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .func-card {
+      background: linear-gradient(135deg, rgba(15, 58, 110, 0.55), rgba(30, 90, 160, 0.45));
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 18px;
+      box-shadow:
+        0 10px 26px rgba(2, 12, 35, 0.4),
+        inset 0 1px 0 rgba(125, 211, 252, 0.5);
+      border: 1px solid rgba(125, 211, 252, 0.35);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 14px;
+      transition: 0.28s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .func-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.18), transparent);
+      transition: left 0.6s ease;
+    }
+    .func-card:hover::before { left: 100%; }
+    .func-card:hover {
+      transform: translateY(-4px);
+      background: linear-gradient(135deg, rgba(14, 116, 144, 0.7), rgba(37, 99, 235, 0.55));
+      box-shadow:
+        0 14px 32px rgba(14, 165, 233, 0.55),
+        0 0 30px rgba(56,189,248,0.35),
+        inset 0 1px 0 rgba(125, 211, 252, 0.8);
+      border-color: #7dd3fc;
+    }
+    .func-card h3 {
+      font-size: 16px;
+      color: #e0f2fe;
+      text-align: center;
+      font-weight: 600;
+      text-shadow: 0 0 10px rgba(125, 211, 252, 0.6);
+      position: relative;
+      z-index: 1;
+    }
+    /* 底部科技元素区 */
+    .bottom-tech-zone {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      pointer-events: none;
+      height: 240px;
+    }
+    .bottom-tech-zone::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(14, 165, 233, 0.18) 100%);
+      pointer-events: none;
+    }
+    .circuit-layer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 180px;
+      z-index: 1;
+    }
+    .circuit-layer svg {
+      width: 100%;
+      height: 100%;
+      color: #7dd3fc;
+      filter: drop-shadow(0 0 8px rgba(125, 211, 252, 0.7));
+    }
+    .data-nodes {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 40px;
+      z-index: 2;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      padding: 0 6%;
+    }
+    .data-node {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffffff, #38bdf8);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
+      position: relative;
+      animation:nodePulse 3.2s ease-in-out infinite;
+    }
+    .data-node:nth-child(1){animation-delay:0s;}
+    .data-node:nth-child(2){animation-delay:0.4s;}
+    .data-node:nth-child(3){animation-delay:0.8s;}
+    .data-node:nth-child(4){animation-delay:1.2s;}
+    .data-node:nth-child(5){animation-delay:1.6s;}
+    .data-node:nth-child(6){animation-delay:2.0s;}
+    .data-node:nth-child(7){animation-delay:2.4s;}
+    .data-node:nth-child(8){animation-delay:2.8s;}
+    @keyframes nodePulse{
+      0%,100%{transform:scale(1);box-shadow:0 0 12px rgba(56,189,248,0.9);}
+      50%{transform:scale(1.35);box-shadow:0 0 22px rgba(56,189,248,1);}
+    }
+    .data-node::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -30px;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 30px;
+      background: linear-gradient(180deg, rgba(125, 211, 252, 0.8), transparent);
+    }
+    .data-node:nth-child(1) { height: 16px; width: 16px; }
+    .data-node:nth-child(2) { height: 12px; width: 12px; }
+    .data-node:nth-child(3) { height: 18px; width: 18px; }
+    .data-node:nth-child(4) { height: 12px; width: 12px; }
+    .data-node:nth-child(5) { height: 14px; width: 14px; }
+    .data-node:nth-child(6) { height: 16px; width: 16px; }
+    .data-node:nth-child(7) { height: 12px; width: 12px; }
+    .data-node:nth-child(8) { height: 18px; width: 18px; }
+    .bottom-instruments {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 160px;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0 4% 30px;
+    }
+    .bottom-instruments svg {
+      color: #e0f2fe;
+      filter: drop-shadow(0 0 12px rgba(125, 211, 252, 0.8));
+    }
+    .bottom-ins-microscope { width: 110px; height: 110px; }
+    .bottom-ins-dna { width: 90px; height: 90px; }
+    .bottom-ins-chip { width: 100px; height: 100px; }
+    .bottom-ins-pcr { width: 100px; height: 100px; }
+    .bottom-ins-beaker { width: 90px; height: 90px; }
+    .bottom-hud {
+      position: absolute;
+      bottom: 180px;
+      z-index: 4;
+      border: 1px solid rgba(125, 211, 252, 0.4);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.22), rgba(59, 130, 246, 0.1));
+      box-shadow: inset 0 0 18px rgba(56, 189, 248, 0.25);
+      backdrop-filter: blur(4px);
+      padding: 10px 14px;
+      color: #bae6fd;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+    .bottom-hud.left { left: 6%; }
+    .bottom-hud.right { right: 6%; }
+    .bottom-hud-bar {
+      width: 140px;
+      height: 6px;
+      background: rgba(125, 211, 252, 0.15);
+      border-radius: 3px;
+      margin-top: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bottom-hud-bar::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 65%;
+      background: linear-gradient(90deg, #38bdf8, #60a5fa);
+      border-radius: 3px;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
+      animation:barFlow 4s ease-in-out infinite;
+    }
+    @keyframes barFlow{
+      0%,100%{width:45%;}
+      50%{width:80%;}
+    }
+
+    @media (max-width: 992px) {
+      .func-grid { grid-template-columns: repeat(2, 1fr); }
+      .dna-bg .dna-1 { width: 340px; height: 340px; animation:none; }
+      .dna-bg .dna-2 { width: 420px; height: 420px; animation:none; }
+      .dna-bg .dna-4 { width: 620px; height: 620px; animation:none; }
+      .hud-1, .hud-3 { width: 120px; height: 120px; }
+      .hud-2, .hud-4 { width: 140px; height: 140px; }
+      .bottom-ins-microscope { width: 90px; height: 90px; }
+      .bottom-ins-chip { width: 80px; height: 80px; }
+      .bottom-ins-pcr { width: 80px; height: 80px; }
+      .full-scan-strip{display:none;}
+      .particles{animation:none;}
+    }
+    @media (max-width: 768px) {
+      .home-banner { padding: 20px 14px 200px; }
+      .home-content { padding: 28px 22px; margin-bottom: 20px; }
+      .home-content h1 { font-size: 22px; }
+      .section-title { font-size: 18px; margin-bottom: 16px; }
+      .section-title::before,
+      .section-title::after { width: 18px; margin: 0 8px; }
+      .func-grid { grid-template-columns: 1fr; gap: 14px; }
+      .dna-bg .dna-1 { width: 260px; height: 260px; }
+      .dna-bg .dna-2 { width: 320px; height: 320px; }
+      .dna-bg .dna-3 { width: 260px; height: 260px; }
+      .dna-bg .dna-4 { width: 460px; height: 460px; }
+      .hud-panel { display: none; }
+      .molecules { opacity: 0.25; }
+      .bottom-tech-zone { height: 200px; }
+      .bottom-instruments { padding: 0 2% 20px; }
+      .bottom-ins-microscope { width: 72px; height: 72px; }
+      .bottom-ins-dna { width: 60px; height: 60px; }
+      .bottom-ins-chip { width: 64px; height: 64px; }
+      .bottom-ins-pcr { width: 64px; height: 64px; }
+      .bottom-ins-beaker { width: 60px; height: 60px; }
+      .data-nodes { display: none; }
+      .bottom-hud { display: none; }
     }
   </style>
 </head>
 <body>
-<div class="nav-bar">
-  <button class="nav-btn" data-target="intro" onclick="location.href='intro.html'">平台介绍</button>
-  <button class="nav-btn" data-target="analysis" onclick="location.href='analysis.html'">数据上传</button>
-  <button class="nav-btn" data-target="result" onclick="location.href='result.html'">结果展示</button>
-</div>
-
-<div class="container">
-  <div class="back-home">
-    <a href="index.html">← 返回平台首页</a>
-  </div>
-  <h2>分析功能模块</h2>
-  <div class="grid-wrap">
-    <!-- 表型数据处理【修复：改用a标签跳转】 -->
-    <div class="block" id="block-phe">
-      <h3>📊 表型数据处理</h3>
-      <div class="item">
-        <a class="btn-small" href="upload-pheno.html">打开完整表型上传页面</a>
-      </div>
-      <div class="item">
-        参数设置
-        <div class="param-group">
-          <div class="check-item">
-            <input type="checkbox" id="phe_filter_miss">
-            <label for="phe_filter_miss">缺失值过滤（缺失率＞0.3剔除）</label>
-          </div>
-          <div class="check-item">
-            <input type="checkbox" id="phe_norm">
-            <label for="phe_norm">表型正态化转换</label>
-          </div>
+  <section class="home-banner">
+    <div class="grid-overlay"></div>
+    <div class="particles"></div>
+    <div class="scan-light"></div>
+    <div class="full-scan-strip" aria-hidden="true"></div>
+    <div class="dna-bg" aria-hidden="true">
+      <svg class="dna-4" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="dnaGradBig" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9" />
+            <stop offset="100%" stop-color="#60a5fa" stop-opacity="0.3" />
+          </linearGradient>
+        </defs>
+        <path d="M40 20 C80 40, 120 40, 160 70 C190 90, 160 120, 120 140 C80 160, 40 140, 40 100 C40 70, 90 60, 130 80"
+              stroke="url(#dnaGradBig)" stroke-width="2.5" fill="none" stroke-linecap="round" />
+        <path d="M40 40 C80 60, 120 60, 160 90 C190 110, 160 140, 120 160"
+              stroke="url(#dnaGradBig)" stroke-width="2.5" fill="none" stroke-linecap="round" />
+        <path d="M40 60 C80 80, 120 80, 160 110"
+              stroke="url(#dnaGradBig)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7" />
+      </svg>
+      <svg class="dna-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="dnaGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#7dd3fc" />
+            <stop offset="100%" stop-color="#3b82f6" />
+          </linearGradient>
+        </defs>
+        <path d="M30 40 C60 20, 140 20, 170 50 C200 80, 140 100, 110 120 C80 140, 40 130, 30 100 C20 70, 80 60, 120 80"
+              stroke="url(#dnaGrad1)" stroke-width="3" fill="none" stroke-linecap="round" />
+        <path d="M30 60 C60 40, 140 40, 170 70 C200 100, 140 120, 110 140"
+              stroke="url(#dnaGrad1)" stroke-width="3" fill="none" stroke-linecap="round" />
+        <line x1="42" y1="50" x2="42" y2="70" stroke="#7dd3fc" stroke-width="2" />
+        <line x1="72" y1="40" x2="72" y2="60" stroke="#7dd3fc" stroke-width="2" />
+        <line x1="102" y1="55" x2="102" y2="75" stroke="#7dd3fc" stroke-width="2" />
+        <line x1="132" y1="70" x2="132" y2="90" stroke="#7dd3fc" stroke-width="2" />
+        <line x1="158" y1="85" x2="158" y2="105" stroke="#7dd3fc" stroke-width="2" />
+      </svg>
+      <svg class="dna-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="dnaGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#a5f3fc" />
+            <stop offset="100%" stop-color="#60a5fa" />
+          </linearGradient>
+        </defs>
+        <path d="M40 30 C70 50, 130 50, 160 80 C190 110, 130 130, 100 150 C70 170, 40 140, 40 110 C40 80, 100 70, 130 90"
+              stroke="url(#dnaGrad2)" stroke-width="3" fill="none" stroke-linecap="round" />
+        <path d="M40 50 C70 70, 130 70, 160 100 C190 130, 130 150, 100 170"
+              stroke="url(#dnaGrad2)" stroke-width="3" fill="none" stroke-linecap="round" />
+        <line x1="50" y1="40" x2="50" y2="60" stroke="#a5f3fc" stroke-width="2" />
+        <line x1="80" y1="55" x2="80" y2="75" stroke="#a5f3fc" stroke-width="2" />
+        <line x1="110" y1="70" x2="110" y2="90" stroke="#a5f3fc" stroke-width="2" />
+        <line x1="140" y1="85" x2="140" y2="105" stroke="#a5f3fc" stroke-width="2" />
+      </svg>
+      <svg class="dna-3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="dnaGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#bae6fd" />
+            <stop offset="100%" stop-color="#7dd3fc" />
+          </linearGradient>
+        </defs>
+        <path d="M50 20 C90 40, 110 40, 150 70 C180 90, 140 120, 100 140 C60 160, 30 130, 50 100 C70 70, 110 60, 140 80"
+              stroke="url(#dnaGrad3)" stroke-width="3" fill="none" stroke-linecap="round" />
+        <path d="M50 40 C90 60, 110 60, 150 90 C180 110, 140 140, 100 160"
+              stroke="url(#dnaGrad3)" stroke-width="3" fill="none" stroke-linecap="round" />
+        <line x1="60" y1="30" x2="60" y2="50" stroke="#bae6fd" stroke-width="2" />
+        <line x1="90" y1="45" x2="90" y2="65" stroke="#bae6fd" stroke-width="2" />
+        <line x1="120" y1="60" x2="120" y2="80" stroke="#bae6fd" stroke-width="2" />
+        <line x1="145" y1="75" x2="145" y2="95" stroke="#bae6fd" stroke-width="2" />
+      </svg>
+    </div>
+    <div class="molecules" aria-hidden="true">
+      <svg class="mol-1" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="4" fill="currentColor" />
+        <circle cx="14" cy="22" r="3" fill="currentColor" />
+        <circle cx="50" cy="22" r="3" fill="currentColor" />
+        <circle cx="20" cy="48" r="3" fill="currentColor" />
+        <circle cx="44" cy="48" r="3" fill="currentColor" />
+        <line x1="32" y1="32" x2="14" y2="22" stroke="currentColor" stroke-width="1.5" />
+        <line x1="32" y1="32" x2="50" y2="22" stroke="currentColor" stroke-width="1.5" />
+        <line x1="32" y1="32" x2="20" y2="48" stroke="currentColor" stroke-width="1.5" />
+        <line x1="32" y1="32" x2="44" y2="48" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+      <svg class="mol-2" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="4" fill="currentColor" />
+        <circle cx="12" cy="14" r="3" fill="currentColor" />
+        <circle cx="52" cy="14" r="3" fill="currentColor" />
+        <circle cx="12" cy="50" r="3" fill="currentColor" />
+        <circle cx="52" cy="50" r="3" fill="currentColor" />
+        <line x1="32" y1="32" x2="12" y2="14" stroke="currentColor" stroke-width="1.5" />
+        <line x1="32" y1="32" x2="52" y2="14" stroke="currentColor" stroke-width="1.5" />
+        <line x1="32" y1="32" x2="12" y2="50" stroke="currentColor" stroke-width="1.5" />
+        <line x1="32" y1="32" x2="52" y2="50" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+      <svg class="mol-3" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="4" fill="currentColor" />
+        <circle cx="20" cy="20" r="3" fill="currentColor" />
+        <circle cx="44" cy="20" r="3" fill="currentColor" />
+        <circle cx="32" cy="52" r="3" fill="currentColor" />
+        <line x1="32" y1="32" x2="20" y2="20" stroke="currentColor" stroke-width="1.5" />
+        <line x1="32" y1="32" x2="44" y2="20" stroke="currentColor" stroke-width="1.5" />
+        <line x1="32" y1="32" x2="32" y2="52" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+      <svg class="mol-4" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="4" fill="currentColor" />
+        <circle cx="16" cy="24" r="3" fill="currentColor" />
+        <circle cx="48" cy="24" r="3" fill="currentColor" />
+        <circle cx="16" cy="44" r="3" fill="currentColor" />
+        <circle cx="48" cy="44" r="3" fill="currentColor" />
+        <line x1="32" y1="32" x2="16" y2="24" stroke="currentColor" stroke-width="1.5" />
+        <line x1="32" y1="32" x2="48" y2="24" stroke="currentColor" stroke-width="1.5" />
+        <line x1="32" y1="32" x2="16" y2="44" stroke="currentColor" stroke-width="1.5" />
+        <line x1="32" y1="32" x2="48" y2="44" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+    </div>
+    <div class="hud-panel hud-1" aria-hidden="true">
+      <span class="hud-title">DNA DATA</span>
+      <svg class="hud-wave" viewBox="0 0 240 40" preserveAspectRatio="none">
+        <path class="hud-wave-path" d="M0 20 Q15 8, 30 20 T60 20 T90 20 T120 20 T150 20 T180 20 T210 20 T240 20" stroke="#7dd3fc" stroke-width="1.5" fill="none" opacity="0.8" />
+      </svg>
+    </div>
+    <div class="hud-panel hud-2" aria-hidden="true">
+      <span class="hud-title">GENOME</span>
+      <div class="hud-circle"></div>
+    </div>
+    <div class="hud-panel hud-3" aria-hidden="true">
+      <span class="hud-title">SEQUENCE</span>
+      <svg class="hud-wave" viewBox="0 0 240 40" preserveAspectRatio="none">
+        <path class="hud-wave-path" d="M0 28 Q20 10, 40 22 T80 18 T120 24 T160 16 T200 26 T240 20" stroke="#7dd3fc" stroke-width="1.5" fill="none" opacity="0.8" />
+      </svg>
+    </div>
+    <div class="hud-panel hud-4" aria-hidden="true">
+      <span class="hud-title">ANALYSIS</span>
+      <div class="hud-circle"></div>
+    </div>
+    <div class="container">
+      <div class="home-content">
+        <h1>纵向性状全转录组关联分析精细定位计算平台</h1>
+        <div class="home-desc">
+          集成表型、基因型、RNA‑seq预处理、表达量预测、GWAS、TWAS全套分析流程。
+        </div>
+        <div class="btn-group">
+          <button class="btn-enter-platform" onclick="location.href='analysis.html'">
+            进入平台分析
+          </button>
+          <button class="btn-intro" onclick="location.href='intro.html'">
+            平台介绍
+          </button>
         </div>
       </div>
-      <button class="btn-export">执行处理并导出本模块数据</button>
-    </div>
-
-    <!-- 基因型数据处理【修复：改用a标签跳转】 -->
-    <div class="block" id="block-geno">
-      <h3>🧬 基因型数据处理</h3>
-      <div class="item">
-        <a class="btn-small" href="upload-geno.html">打开完整基因型上传页面</a>
-      </div>
-      <div class="item">
-        参数设置
-        <div class="param-group">
-          <label>最小等位基因频率(MAF)</label>
-          <select>
-            <option>剔除MAF小于1%</option>
-            <option selected>剔除MAF小于5%</option>
-          </select>
-          <label>个体缺失率</label>
-          <select>
-            <option>剔除高于5%</option>
-            <option selected>剔除高于10%</option>
-          </select>
-          <div class="check-item">
-            <input type="checkbox" id="geno_hwe">
-            <label for="geno_hwe">哈代‑温伯格平衡检验（剔除P＜1e‑6的SNP）</label>
-          </div>
+      <h2 class="section-title">平台功能模块</h2>
+      <div class="func-grid">
+        <div class="func-card" onclick="location.href='analysis.html?module=phe'">
+          <h3>📊 表型数据处理</h3>
+        </div>
+        <div class="func-card" onclick="location.href='analysis.html?module=geno'">
+          <h3>🧬 基因型数据处理</h3>
+        </div>
+        <div class="func-card" onclick="location.href='analysis.html?module=rna'">
+          <h3>📜 RNAseq数据处理</h3>
+        </div>
+        <div class="func-card" onclick="location.href='analysis.html?module=pred'">
+          <h3>🔮 表达量预测</h3>
+        </div>
+        <div class="func-card" onclick="location.href='analysis.html?module=gwas'">
+          <h3>📈 GWAS分析</h3>
+        </div>
+        <div class="func-card" onclick="location.href='analysis.html?module=twas'">
+          <h3>🧪 TWAS分析</h3>
         </div>
       </div>
-      <button class="btn-export">执行处理并导出本模块数据</button>
     </div>
-
-    <div class="block" id="block-rna">
-      <h3>📜 RNAseq数据处理</h3>
-      <div class="item">
-        RNA‑seq表达矩阵输入
-        <input type="file">
+    <!-- 底部新增科技元素区 -->
+    <div class="bottom-tech-zone" aria-hidden="true">
+      <div class="circuit-layer">
+        <svg viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="circuitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.1" />
+              <stop offset="50%" stop-color="#7dd3fc" stop-opacity="0.8" />
+              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.1" />
+            </linearGradient>
+          </defs>
+          <!-- 主电路线 -->
+          <path d="M0 90 Q120 40, 240 90 T480 90 T720 90 T960 90 T1200 90 T1440 90"
+                stroke="url(#circuitGrad)" stroke-width="1.5" fill="none" />
+          <path d="M0 120 Q180 70, 360 120 T720 120 T1080 120 T1440 120"
+                stroke="url(#circuitGrad)" stroke-width="1" fill="none" opacity="0.7" />
+          <path d="M0 60 Q200 20, 400 60 T800 60 T1200 60 T1440 60"
+                stroke="url(#circuitGrad)" stroke-width="1" fill="none" opacity="0.5" />
+          <!-- 分支电路 -->
+          <path d="M120 90 L120 50 M240 90 L240 130 M360 90 L360 40 M480 90 L480 140 M600 90 L600 55 M720 90 L720 125 M840 90 L840 45 M960 90 L960 135 M1080 90 L1080 60 M1200 90 L1200 120 M1320 90 L1320 50"
+                stroke="#7dd3fc" stroke-width="1" opacity="0.6" />
+          <!-- 电路节点 -->
+          <circle cx="120" cy="90" r="3" fill="#7dd3fc" opacity="0.9" />
+          <circle cx="240" cy="90" r="3" fill="#7dd3fc" opacity="0.9" />
+          <circle cx="360" cy="90" r="4" fill="#bae6fd" opacity="1" />
+          <circle cx="480" cy="90" r="3" fill="#7dd3fc" opacity="0.9" />
+          <circle cx="600" cy="90" r="3" fill="#7dd3fc" opacity="0.9" />
+          <circle cx="720" cy="90" r="4" fill="#bae6fd" opacity="1" />
+          <circle cx="840" cy="90" r="3" fill="#7dd3fc" opacity="0.9" />
+          <circle cx="960" cy="90" r="3" fill="#7dd3fc" opacity="0.9" />
+          <circle cx="1080" cy="90" r="4" fill="#bae6fd" opacity="1" />
+          <circle cx="1200" cy="90" r="3" fill="#7dd3fc" opacity="0.9" />
+          <circle cx="1320" cy="90" r="3" fill="#7dd3fc" opacity="0.9" />
+          <!-- 小型DNA片段 -->
+          <path d="M180 140 C200 130, 220 130, 240 140 C260 150, 220 150, 200 160"
+                stroke="#7dd3fc" stroke-width="1.5" fill="none" />
+          <path d="M820 150 C840 140, 860 140, 880 150 C900 160, 860 160, 840 170"
+                stroke="#7dd3fc" stroke-width="1.5" fill="none" />
+          <path d="M1180 145 C1200 135, 1220 135, 1240 145 C1260 155, 1220 155, 1200 165"
+                stroke="#7dd3fc" stroke-width="1.5" fill="none" />
+          <!-- 分子小点 -->
+          <circle cx="60" cy="70" r="2" fill="#bae6fd" opacity="0.8" />
+          <circle cx="300" cy="110" r="2" fill="#bae6fd" opacity="0.8" />
+          <circle cx="540" cy="50" r="2" fill="#bae6fd" opacity="0.8" />
+          <circle cx="780" cy="130" r="2" fill="#bae6fd" opacity="0.8" />
+          <circle cx="1020" cy="75" r="2" fill="#bae6fd" opacity="0.8" />
+          <circle cx="1260" cy="115" r="2" fill="#bae6fd" opacity="0.8" />
+        </svg>
       </div>
-      <div class="item">
-        参数设置
-        <div class="param-group">
-          <div class="check-item">
-            <input type="checkbox" id="rna_filter_sample">
-            <label for="rna_filter_sample">剔除低质量样本（比对率低于80%）</label>
-          </div>
-          <div class="check-item">
-            <input type="checkbox" id="rna_filter_gene">
-            <label for="rna_filter_gene">去除低表达基因（超过50%样本中表达量为0）</label>
-          </div>
-          <div class="check-item">
-            <input type="checkbox" id="rna_normalize">
-            <label for="rna_normalize">基因表达量标准化</label>
-          </div>
-          <label>标准化方法</label>
-          <select>
-            <option>TPM</option>
-            <option>FPKM</option>
-          </select>
-          <div class="check-item">
-            <input type="checkbox" id="rna_batch">
-            <label for="rna_batch">校正批次效应</label>
-          </div>
-          <label>批次校正方法</label>
-          <select>
-            <option>ComBat</option>
-            <option>PEER</option>
-          </select>
-        </div>
+      <div class="data-nodes" aria-hidden="true">
+        <div class="data-node"></div>
+        <div class="data-node"></div>
+        <div class="data-node"></div>
+        <div class="data-node"></div>
+        <div class="data-node"></div>
+        <div class="data-node"></div>
+        <div class="data-node"></div>
+        <div class="data-node"></div>
       </div>
-      <button class="btn-export">执行处理并导出本模块数据</button>
+      <div class="bottom-hud left" aria-hidden="true">
+        <div>GENE SEQUENCE</div>
+        <div class="bottom-hud-bar"></div>
+      </div>
+      <div class="bottom-hud right" aria-hidden="true">
+        <div>DATA STREAM</div>
+        <div class="bottom-hud-bar"></div>
+      </div>
+      <div class="bottom-instruments" aria-hidden="true">
+        <svg class="bottom-ins-microscope" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="44" width="24" height="6" rx="2" stroke="currentColor" stroke-width="2" fill="none" />
+          <rect x="26" y="26" width="12" height="18" rx="2" stroke="currentColor" stroke-width="2" fill="none" />
+          <circle cx="32" cy="20" r="6" stroke="currentColor" stroke-width="2" fill="none" />
+          <path d="M32 26 L32 34" stroke="currentColor" stroke-width="2" />
+          <path d="M22 50 L42 50" stroke="currentColor" stroke-width="2" />
+        </svg>
+        <svg class="bottom-ins-dna" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 14 C24 20, 40 20, 50 28 C60 36, 44 42, 34 50 C24 58, 14 52, 14 44 C14 36, 30 32, 40 36"
+                stroke="currentColor" stroke-width="2" fill="none" />
+          <path d="M14 22 C24 28, 40 28, 50 36 C60 44, 44 50, 34 58"
+                stroke="currentColor" stroke-width="2" fill="none" />
+        </svg>
+        <svg class="bottom-ins-chip" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <rect x="14" y="14" width="36" height="36" rx="4" stroke="currentColor" stroke-width="2" fill="none" />
+          <rect x="20" y="20" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <rect x="28" y="20" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <rect x="36" y="20" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <rect x="20" y="28" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <rect x="28" y="28" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <rect x="36" y="28" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <rect x="20" y="36" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <rect x="28" y="36" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <rect x="36" y="36" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none" />
+        </svg>
+        <svg class="bottom-ins-pcr" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="28" width="40" height="24" rx="4" stroke="currentColor" stroke-width="2" fill="none" />
+          <rect x="18" y="34" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <rect x="28" y="34" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <rect x="38" y="34" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" fill="none" />
+          <path d="M14 28 L14 20 L50 20 L50 28" stroke="currentColor" stroke-width="2" fill="none" />
+        </svg>
+        <svg class="bottom-ins-beaker" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <rect x="26" y="8" width="12" height="6" stroke="currentColor" stroke-width="2" fill="none" />
+          <path d="M28 14 L28 40 L18 54 L46 54 L36 40 L36 14 Z" stroke="currentColor" stroke-width="2" fill="none" />
+          <path d="M22 48 L42 48" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </div>
     </div>
-    <div class="block" id="block-pred">
-      <h3>🔮 表达量预测</h3>
-      <div class="item">
-        RNA‑seq数据输入（用于训练权重）
-        <input type="file">
-      </div>
-      <div class="item">
-        预处理后基因型输入
-        <input type="file">
-      </div>
-      <div class="item">
-        <label>预测模型选择</label>
-        <select>
-          <option selected>Elastic Net</option>
-        </select>
-      </div>
-      <button class="btn-export">执行处理并导出本模块数据</button>
-    </div>
-    <div class="block" id="block-gwas">
-      <h3>📈 GWAS分析<br />(单性状动物模型 / 随机回归模型)</h3>
-      <div class="item">
-        预处理后表型输入
-        <input type="file">
-      </div>
-      <div class="item">
-        预处理后基因型输入
-        <input type="file">
-      </div>
-      <div class="item">
-        参数设置
-        <div class="param-group">
-          <label>GWAS模型选择</label>
-          <select>
-            <option>单性状动物模型</option>
-            <option>随机回归模型</option>
-          </select>
-        </div>
-      </div>
-      <button class="btn-export">执行分析并导出本模块数据</button>
-    </div>
-    <div class="block" id="block-twas">
-      <h3>🧪 TWAS分析(常规 / 纵向)</h3>
-      <div class="item">
-        GWAS结果文件输入
-        <input type="file">
-      </div>
-      <div class="item">
-        预测GReX表达文件输入
-        <input type="file">
-      </div>
-      <div class="item">
-        参数设置
-        <div class="param-group">
-          <label>TWAS模式选择</label>
-          <select>
-            <option>常规TWAS</option>
-            <option>纵向TWAS</option>
-          </select>
-        </div>
-      </div>
-      <button class="btn-export">执行处理并导出本模块数据</button>
-    </div>
-  </div>
-</div>
-<script>
-document.querySelectorAll('.btn-export').forEach(btn=>{
-  btn.addEventListener('click',function(){
-    if(!this.disabled){
-      alert(this.innerText + "，前端触发，后端接口待对接");
-    }
-  })
-})
-const urlParams = new URLSearchParams(window.location.search);
-const mod = urlParams.get('module');
-if(mod){
-  const targetDom = document.getElementById('block-' + mod);
-  if(targetDom){
-    targetDom.classList.add('block-zoom');
-    setTimeout(()=>{
-      targetDom.classList.remove('block-zoom');
-    },1200);
-  }
-}
-
-//导航激活判断，data‑target匹配文件名结尾
-(function(){
-  const path = window.location.pathname;
-  const btns = document.querySelectorAll(".nav-btn");
-  btns.forEach(b=>{
-    const t = b.dataset.target;
-    b.classList.remove("active");
-    if((t==="intro" && path.endsWith("intro.html"))){
-      b.classList.add("active");
-    }else if((t==="analysis" && path.endsWith("analysis.html"))){
-      b.classList.add("active");
-    }else if((t==="result" && path.endsWith("result.html"))){
-      b.classList.add("active");
-    }
-  })
-})()
-</script>
+  </section>
 </body>
 </html>
