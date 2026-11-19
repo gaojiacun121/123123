@@ -11,19 +11,17 @@
       box-sizing: border-box;
       font-family: "Microsoft Yahei", system-ui, sans-serif;
     }
-
     html, body {
       min-height: 100vh;
       color: #e0f2fe;
     }
-
     /* ===== 全局科技背景 ===== */
     .page-wrap {
       position: relative;
       min-height: 100vh;
       width: 100%;
-      padding-top:70px;
-      padding-bottom:240px;
+      padding-top:64px;
+      padding-bottom:60px;
       overflow: hidden;
       background:
         radial-gradient(circle at 18% 12%, rgba(125, 211, 252, 0.55), transparent 30%),
@@ -33,7 +31,6 @@
         linear-gradient(135deg, #0b2a4a 0%, #134074 25%, #1a5a9e 55%, #2f80c6 80%, #58a6e0 100%);
       z-index: 0;
     }
-
     .grid-overlay {
       position: absolute;
       inset: 0;
@@ -45,7 +42,6 @@
       background-size: 40px 40px;
       mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.65) 40%, transparent 75%);
     }
-
     .particles {
       position: absolute;
       inset: 0;
@@ -63,8 +59,6 @@
       background-size: 260px 260px, 320px 320px, 280px 280px, 340px 340px, 300px 300px, 270px 270px, 310px 310px, 290px 290px;
       opacity: 0.55;
     }
-
-    /* 横向流动扫描光动画 */
     .scan-flow-light{
       position:absolute;
       top:0;
@@ -80,8 +74,6 @@
       0%{left:-120%;}
       100%{left:120%;}
     }
-
-    /* 纵向扫描光带 */
     .vertical-scan{
       position:absolute;
       top:-20%;
@@ -97,8 +89,6 @@
       0%{top:-20%;}
       100%{top:100%;}
     }
-
-    /* 脉冲发光粒子层 */
     .pulse-particles{
       position:absolute;
       inset:0;
@@ -119,7 +109,6 @@
     .dot2{width:10px;height:10px;top:30%;right:20%;animation-delay:1s;}
     .dot3{width:12px;height:12px;top:65%;left:22%;animation-delay:2s;}
     .dot4{width:16px;height:16px;bottom:25%;right:18%;animation-delay:3s;}
-
     .scan-light {
       position: absolute;
       left: 0;
@@ -130,8 +119,6 @@
       pointer-events: none;
       background: linear-gradient(180deg, rgba(125, 211, 252, 0.35), transparent);
     }
-
-    /* ===== 外圈科幻装饰：环形轨道 + 点阵雷达 ===== */
     .outer-ring-scifi{
       position:absolute;
       inset:4%;
@@ -164,7 +151,6 @@
       0%{transform:rotate(0deg);}
       100%{transform:rotate(360deg);}
     }
-
     .radar-dot-field{
       position:absolute;
       inset:0;
@@ -180,8 +166,6 @@
       background-size:220px 220px,260px 260px,240px 240px,280px 280px,300px 300px,320px 320px;
       opacity:0.5;
     }
-
-    /* 数据流线 */
     .data-flow-lines{
       position:absolute;
       inset:0;
@@ -205,8 +189,6 @@
       0%{transform:translateX(-20%);}
       100%{transform:translateX(20%);}
     }
-
-    /* 四角全息装饰 */
     .corner-holo{
       position:absolute;
       width:120px;
@@ -229,10 +211,8 @@
     }
     .corner-holo.tl{top:80px;left:2%;}
     .corner-holo.tr{top:80px;right:2%;}
-    .corner-holo.bl{bottom:250px;left:2%;}
-    .corner-holo.br{bottom:250px;right:2%;}
-
-    /* 侧边悬浮小仪表 */
+    .corner-holo.bl{bottom:12px;left:2%;}
+    .corner-holo.br{bottom:12px;right:2%;}
     .side-hud-vertical{
       position:absolute;
       top:50%;
@@ -267,7 +247,6 @@
       0%,100%{width:20%;}
       50%{width:85%;}
     }
-
     .dna-bg {
       position: absolute;
       inset: 0;
@@ -282,7 +261,6 @@
     .dna-bg .dna-1 { top: -80px; left: -120px; width: 460px; height: 460px; transform: rotate(-10deg); opacity: 0.45; }
     .dna-bg .dna-2 { top: 140px; right: -140px; width: 520px; height: 520px; transform: rotate(14deg); opacity: 0.38; }
     .dna-bg .dna-3 { bottom: -100px; left: 10%; width: 400px; height: 400px; transform: rotate(-6deg); opacity: 0.32; }
-
     .molecules {
       position: absolute;
       inset: 0;
@@ -295,7 +273,6 @@
     .molecules .mol-2 { top: 55%; right:10%; width:100px;height:100px; }
     .molecules .mol-3 { top:35%; left:85%; width:80px;height:80px; }
     .molecules .mol-4 { bottom:20%; left:75%; width:95px;height:95px; }
-
     .hud-panel {
       position: absolute;
       z-index: 1;
@@ -311,17 +288,14 @@
     }
     .hud-panel::before{top:-1px;left:-1px;border-right:none;border-bottom:none;}
     .hud-panel::after{bottom:-1px;right:-1px;border-left:none;border-top:none;}
-
     .hud-a{top:14%;left:3%;width:140px;height:140px;}
     .hud-b{top:22%;right:3%;width:160px;height:160px;}
-    .hud-c{bottom:260px;left:4%;width:145px;height:145px;}
-    .hud-d{bottom:270px;right:3%;width:170px;height:170px;}
+    .hud-c{bottom:16px;left:4%;width:145px;height:145px;}
+    .hud-d{bottom:16px;right:3%;width:170px;height:170px;}
     .hud-title{position:absolute;top:10px;left:12px;font-size:12px;color:#bae6fd;letter-spacing:1px;opacity:0.85;}
     .hud-circle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70%;height:70%;border-radius:50%;border:1px dashed rgba(125,211,252,0.5);}
     .hud-circle::before{content:"";position:absolute;inset:14%;border-radius:50%;border:1px solid rgba(125,211,252,0.4);}
     .hud-circle::after{content:"";position:absolute;inset:28%;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,0.45),transparent 70%);}
-
-    /* 边角小型全息标签 */
     .corner-tag{
       position:absolute;
       z-index:1;
@@ -336,41 +310,9 @@
       background:rgba(14,165,233,0.08);
     }
     .tag-top-left{top:90px;left:2%;}
-    .tag-bottom-right{bottom:250px;right:2%;}
+    .tag-bottom-right{bottom:16px;right:2%;}
 
-    /* 底部科技区 */
-    .bottom-tech-zone {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 2;
-      pointer-events: none;
-      height: 240px;
-    }
-    .bottom-tech-zone::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,rgba(14,165,233,0.18)100%);}
-    .circuit-layer{position:absolute;left:0;right:0;bottom:0;height:180px;z-index:1;}
-    .circuit-layer svg{width:100%;height:100%;color:#7dd3fc;filter:drop-shadow(0 0 8px rgba(125,211,252,0.7));}
-    .data-nodes{position:absolute;left:0;right:0;bottom:40px;z-index:2;display:flex;justify-content:space-around;align-items:flex-end;padding:0 6%;}
-    .data-node{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,#ffffff,#38bdf8);box-shadow:0 0 12px rgba(56,189,248,0.9);position:relative;}
-    .data-node::after{content:"";position:absolute;left:50%;bottom:-30px;transform:translateX(-50%);width:2px;height:30px;background:linear-gradient(180deg,rgba(125,211,252,0.8),transparent);}
-    .data-node:nth-child(1) { height: 16px; width: 16px; }
-    .data-node:nth-child(2) { height: 12px; width: 12px; }
-    .data-node:nth-child(3) { height: 18px; width: 18px; }
-    .data-node:nth-child(4) { height: 12px; width: 12px; }
-    .data-node:nth-child(5) { height: 14px; width: 14px; }
-    .data-node:nth-child(6) { height: 16px; width: 16px; }
-    .data-node:nth-child(7) { height: 12px; width: 12px; }
-    .data-node:nth-child(8) { height: 18px; width: 18px; }
-    .bottom-instruments{position:absolute;left:0;right:0;bottom:0;height:160px;z-index:3;display:flex;justify-content:space-between;align-items:flex-end;padding:0 4% 30px;}
-    .bottom-instruments svg{color:#e0f2fe;filter:drop-shadow(0 0 12px rgba(125,211,252,0.8));}
-    .bottom-ins-microscope { width: 110px; height: 110px; }
-    .bottom-ins-dna { width: 90px; height: 90px; }
-    .bottom-ins-chip { width: 100px; height: 100px; }
-    .bottom-ins-pcr { width: 100px; height: 100px; }
-    .bottom-ins-beaker { width: 90px; height: 90px; }
-
-    /* ===== 导航栏：柔和浅蓝半透背景 ===== */
+    /* ===== 导航栏 ===== */
     .nav-bar{
       position:fixed;
       top:0;
@@ -383,16 +325,14 @@
       padding:12px 20px;
       display:flex;
       justify-content:center;
-      gap:12px;
+      gap:20px;
       border-bottom:1px solid rgba(125, 211, 252, 0.25);
     }
-
-    /* 平台介绍、结果展示：原版深蓝色按钮 */
     .nav-btn{
-      padding:8px 22px;
+      padding:10px 28px;
       border:none;
-      border-radius:8px;
-      font-size:15px;
+      border-radius:12px;
+      font-size:17px;
       cursor:pointer;
       background:#2980b9;
       color:#ffffff;
@@ -406,8 +346,6 @@
       color:#222222;
       box-shadow:0 2px 6px rgba(0,0,0,0.12);
     }
-
-    /* 仅数据上传按钮：白底黑字+蓝色描边 */
     .btn-upload-fixed{
       background:#ffffff !important;
       color:#222222 !important;
@@ -419,96 +357,96 @@
       color:#165DFF !important;
     }
 
-    /* ===== 主体容器毛玻璃卡片 ===== */
+    /* ===== 主体容器，恢复自然滚动 ===== */
     .container {
       position:relative;
       z-index:3;
-      max-width: 1240px;
+      max-width: 100%;
       margin: 0 auto;
-      padding:0 20px;
+      padding:12px 40px 12px;
     }
     .back-home{
-      margin-bottom:20px;
+      margin-bottom:12px;
     }
     .back-home a{
       color:#7dd3fc;
       text-decoration:none;
+      font-size:18px;
     }
     .back-home a:hover{
       text-decoration:underline;
     }
     h2 {
       text-align: center;
-      margin-bottom: 28px;
-      font-size:24px;
+      margin-bottom:20px;
+      font-size:28px;
       color:#e0f2fe;
       text-shadow:0 0 16px rgba(125,211,252,0.6);
     }
     .grid-wrap {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      grid-template-rows: auto auto;
+      gap:22px;
     }
-
     .block {
       background: linear-gradient(135deg, rgba(15, 58, 110, 0.55), rgba(30, 90, 160, 0.45));
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border:1px solid rgba(125, 211, 252, 0.35);
-      border-radius: 18px;
-      padding: 22px;
+      border-radius:20px;
+      padding:24px 22px;
       box-shadow: 0 10px 26px rgba(2, 12, 35, 0.4), inset 0 1px 0 rgba(125, 211, 252, 0.5);
       display: flex;
       flex-direction: column;
-      height: 100%;
+      min-height:340px;
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
     .block.block-zoom{
-      transform: scale(1.03);
+      transform: scale(1.02);
       box-shadow:0 14px 32px rgba(14, 165, 233, 0.55);
       border-color:#7dd3fc;
     }
     .block h3 {
-      font-size: 16px;
-      margin-bottom: 12px;
+      font-size:20px;
+      margin-bottom:12px;
       padding-left: 8px;
       border-left: 4px solid #38bdf8;
       color:#e0f2fe;
     }
     .item {
-      font-size: 13px;
-      padding: 10px 0;
+      font-size:16px;
+      padding:10px 0;
       border-bottom: 1px dashed rgba(125,211,252,0.22);
       color:#bae6fd;
     }
     .item:last-child {
       border-bottom: none;
     }
-
     input, select {
       width: 100%;
-      margin: 6px 0;
-      padding: 7px 9px;
+      margin:6px 0;
+      padding:8px 10px;
       border: 1px solid rgba(125, 211, 252, 0.4);
-      border-radius: 6px;
+      border-radius:8px;
       background:rgba(255,255,255,0.08);
       color:#ffffff;
+      font-size:15px;
     }
     select option{
       background:#134074;
       color:#ffffff;
     }
-
-    /* 文件选择按钮蓝色样式 */
     input[type="file"]{
       width:100%;
       margin:6px 0;
-      padding:9px 10px;
+      padding:8px 10px;
       border:1px solid rgba(56, 189, 248, 0.5);
       border-radius:8px;
       background:linear-gradient(135deg, rgba(22, 93, 255, 0.12), rgba(56, 189, 248, 0.08));
       color:#e0f2fe;
       cursor:pointer;
+      font-size:15px;
       transition:0.25s ease;
     }
     input[type="file"]:hover{
@@ -517,8 +455,8 @@
       box-shadow:0 0 0 3px rgba(56, 189, 248, 0.12);
     }
     input[type="file"]::file-selector-button{
-      padding:7px 16px;
-      margin-right:12px;
+      padding:6px 14px;
+      margin-right:10px;
       border:none;
       border-radius:6px;
       background:linear-gradient(135deg, #38bdf8, #2563eb);
@@ -530,33 +468,33 @@
     input[type="file"]::file-selector-button:hover{
       background:linear-gradient(135deg, #0ea5e9, #1d4ed8);
     }
-
     .param-group{
       padding-left:10px;
       margin:8px 0;
       flex-grow:1;
       color:#bae6fd;
+      font-size:15px;
     }
     .check-item{
       display:flex;
-      gap:6px;
+      gap:8px;
       align-items:center;
       margin:6px 0;
     }
     input[type="checkbox"]{
       width:auto;
       margin:0;
+      transform:scale(1.15);
     }
-
     .btn-export{
       width:100%;
       padding:10px;
       background: linear-gradient(135deg, #38bdf8, #2563eb);
       color:#fff;
       border:1px solid rgba(125,211,252,0.5);
-      border-radius:8px;
+      border-radius:10px;
       cursor:pointer;
-      font-size:14px;
+      font-size:16px;
       margin-top: auto;
       transition:0.25s ease;
     }
@@ -565,17 +503,16 @@
       transform:translateY(-2px);
       box-shadow:0 6px 16px rgba(14,165,233,0.45);
     }
-
     .btn-small{
       display:block;
       width:100%;
-      padding:10px;
+      padding:9px;
       background:rgba(15, 58, 110, 0.45);
       color:#7dd3fc;
       border:1px solid #7dd3fc;
       border-radius:8px;
       cursor:pointer;
-      font-size:14px;
+      font-size:15px;
       margin:6px 0;
       text-align:center;
       text-decoration:none;
@@ -586,8 +523,14 @@
       color:#fff;
     }
 
+    @media(max-width:1200px){
+      .grid-wrap{gap:18px;}
+      .block{padding:20px 18px;min-height:300px;}
+      .block h3{font-size:18px;}
+      h2{font-size:24px;}
+    }
     @media(max-width:992px){
-      .grid-wrap{grid-template-columns:repeat(2,1fr);}
+      .grid-wrap{grid-template-columns:repeat(2,1fr);gap:18px;}
       .dna-bg .dna-1 { width:340px;height:340px; }
       .dna-bg .dna-2 { width:400px;height:400px; }
       .hud-panel{display:none;}
@@ -599,19 +542,20 @@
       .radar-dot-field{display:none;}
     }
     @media(max-width:768px){
-      .page-wrap{padding-bottom:200px;padding-top:64px;}
-      .grid-wrap{grid-template-columns:1fr;gap:14px;}
-      .nav-bar{gap:6px;padding:10px 12px;}
-      .nav-btn{padding:7px 12px;font-size:14px;}
+      .page-wrap{padding-top:64px; padding-bottom:40px;}
+      .container{padding:0 16px;}
+      .grid-wrap{grid-template-columns:1fr;gap:16px;}
+      .nav-bar{gap:8px;padding:10px 12px;}
+      .nav-btn{padding:7px 14px;font-size:14px;}
       .dna-bg .dna-1 { width:240px;height:240px; }
       .dna-bg .dna-2 { width:280px;height:280px; }
       .dna-bg .dna-3 { width:240px;height:240px; }
       .molecules{opacity:0.2;}
-      .data-nodes{display:none;}
-      .bottom-instruments svg{transform:scale(0.7);}
       .pulse-particles{display:none;}
       .scan-flow-light{display:none;}
       .vertical-scan{display:none;}
+      .back-home a{font-size:16px;}
+      h2{font-size:22px;}
     }
   </style>
 </head>
@@ -622,26 +566,19 @@
   <div class="scan-flow-light"></div>
   <div class="vertical-scan"></div>
   <div class="scan-light"></div>
-
   <div class="pulse-particles" aria-hidden="true">
     <div class="pulse-dot dot1"></div>
     <div class="pulse-dot dot2"></div>
     <div class="pulse-dot dot3"></div>
     <div class="pulse-dot dot4"></div>
   </div>
-
-  <!-- 外圈科幻装饰 -->
   <div class="outer-ring-scifi" aria-hidden="true"></div>
   <div class="radar-dot-field" aria-hidden="true"></div>
   <div class="data-flow-lines" aria-hidden="true"></div>
-
-  <!-- 四角全息装饰 -->
   <div class="corner-holo tl" aria-hidden="true"></div>
   <div class="corner-holo tr" aria-hidden="true"></div>
   <div class="corner-holo bl" aria-hidden="true"></div>
   <div class="corner-holo br" aria-hidden="true"></div>
-
-  <!-- 侧边悬浮小仪表 -->
   <div class="side-hud-vertical left" aria-hidden="true">
     <div class="hud-bar"><div class="hud-bar-fill"></div></div>
     <div class="hud-bar"><div class="hud-bar-fill" style="animation-delay:1.5s;"></div></div>
@@ -652,113 +589,108 @@
     <div class="hud-bar"><div class="hud-bar-fill" style="animation-delay:2s;"></div></div>
     <div class="hud-bar"><div class="hud-bar-fill" style="animation-delay:3.5s;"></div></div>
   </div>
-
   <div class="corner-tag tag-top-left">GENOME‑ANALYSIS</div>
   <div class="corner-tag tag-bottom-right">TWAS‑PIPELINE</div>
-
   <div class="dna-bg" aria-hidden="true">
     <svg class="dna-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="dnaGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#7dd3fc"/>
-          <stop offset="100%" stop-color="#3b82f6"/>
+        <linearGradient id="dnaGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#7dd3fc" />
+          <stop offset="100%" stop-color="#3b82f6" />
         </linearGradient>
       </defs>
       <path d="M30 40 C60 20, 140 20, 170 50 C200 80, 140 100, 110 120 C80 140, 40 130, 30 100 C20 70, 80 60, 120 80"
-            stroke="url(#dnaGrad1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            stroke="url(#dnaGrad1)" stroke-width="3" fill="none" stroke-linecap="round" />
       <path d="M30 60 C60 40, 140 40, 170 70 C200 100, 140 120, 110 140"
-            stroke="url(#dnaGrad1)" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <line x1="42" y1="50" x2="42" y2="70" stroke="#7dd3fc" stroke-width="2"/>
-      <line x1="72" y1="40" x2="72" y2="60" stroke="#7dd3fc" stroke-width="2"/>
-      <line x1="102" y1="55" x2="102" y2="75" stroke="#7dd3fc" stroke-width="2"/>
-      <line x1="132" y1="70" x2="132" y2="90" stroke="#7dd3fc" stroke-width="2"/>
-      <line x1="158" y1="85" x2="158" y2="105" stroke="#7dd3fc" stroke-width="2"/>
+            stroke="url(#dnaGrad1)" stroke-width="3" fill="none" stroke-linecap="round" />
+      <line x1="42" y1="50" x2="42" y2="70" stroke="#7dd3fc" stroke-width="2" />
+      <line x1="72" y1="40" x2="72" y2="60" stroke="#7dd3fc" stroke-width="2" />
+      <line x1="102" y1="55" x2="102" y2="75" stroke="#7dd3fc" stroke-width="2" />
+      <line x1="132" y1="70" x2="132" y2="90" stroke="#7dd3fc" stroke-width="2" />
+      <line x1="158" y1="85" x2="158" y2="105" stroke="#7dd3fc" stroke-width="2" />
     </svg>
     <svg class="dna-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="dnaGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#a5f3fc"/>
-          <stop offset="100%" stop-color="#60a5fa"/>
+        <linearGradient id="dnaGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#a5f3fc" />
+          <stop offset="100%" stop-color="#60a5fa" />
         </linearGradient>
       </defs>
       <path d="M40 30 C70 50, 130 50, 160 80 C190 110, 130 130, 100 150 C70 170, 40 140, 40 110 C40 80, 100 70, 130 90"
-            stroke="url(#dnaGrad2)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            stroke="url(#dnaGrad2)" stroke-width="3" fill="none" stroke-linecap="round" />
       <path d="M40 50 C70 70, 130 70, 160 100 C190 130, 130 150, 100 170"
-            stroke="url(#dnaGrad2)" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <line x1="50" y1="40" x2="50" y2="60" stroke="#a5f3fc" stroke-width="2"/>
-      <line x1="80" y1="55" x2="80" y2="75" stroke="#a5f3fc" stroke-width="2"/>
-      <line x1="110" y1="70" x2="110" y2="90" stroke="#a5f3fc" stroke-width="2"/>
-      <line x1="140" y1="85" x2="140" y2="105" stroke="#a5f3fc" stroke-width="2"/>
+            stroke="url(#dnaGrad2)" stroke-width="3" fill="none" stroke-linecap="round" />
+      <line x1="50" y1="40" x2="50" y2="60" stroke="#a5f3fc" stroke-width="2" />
+      <line x1="80" y1="55" x2="80" y2="75" stroke="#a5f3fc" stroke-width="2" />
+      <line x1="110" y1="70" x2="110" y2="90" stroke="#a5f3fc" stroke-width="2" />
+      <line x1="140" y1="85" x2="140" y2="105" stroke="#a5f3fc" stroke-width="2" />
     </svg>
     <svg class="dna-3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="dnaGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#bae6fd"/>
-          <stop offset="100%" stop-color="#7dd3fc"/>
+        <linearGradient id="dnaGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#bae6fd" />
+          <stop offset="100%" stop-color="#7dd3fc" />
         </linearGradient>
       </defs>
       <path d="M50 20 C90 40, 110 40, 150 70 C180 90, 140 120, 100 140 C60 160, 30 130, 50 100 C70 70, 110 60, 140 80"
-            stroke="url(#dnaGrad3)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            stroke="url(#dnaGrad3)" stroke-width="3" fill="none" stroke-linecap="round" />
       <path d="M50 40 C90 60, 110 60, 150 90 C180 110, 140 140, 100 160"
-            stroke="url(#dnaGrad3)" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <line x1="60" y1="30" x2="60" y2="50" stroke="#bae6fd" stroke-width="2"/>
-      <line x1="90" y1="45" x2="90" y2="65" stroke="#bae6fd" stroke-width="2"/>
-      <line x1="120" y1="60" x2="120" y2="80" stroke="#bae6fd" stroke-width="2"/>
-      <line x1="145" y1="75" x2="145" y2="95" stroke="#bae6fd" stroke-width="2"/>
+            stroke="url(#dnaGrad3)" stroke-width="3" fill="none" stroke-linecap="round" />
+      <line x1="60" y1="30" x2="60" y2="50" stroke="#bae6fd" stroke-width="2" />
+      <line x1="90" y1="45" x2="90" y2="65" stroke="#bae6fd" stroke-width="2" />
+      <line x1="120" y1="60" x2="120" y2="80" stroke="#bae6fd" stroke-width="2" />
+      <line x1="145" y1="75" x2="145" y2="95" stroke="#bae6fd" stroke-width="2" />
     </svg>
   </div>
-
   <div class="molecules" aria-hidden="true">
     <svg class="mol-1" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="32" cy="32" r="4" fill="currentColor"/>
-      <circle cx="14" cy="22" r="3" fill="currentColor"/>
-      <circle cx="50" cy="22" r="3" fill="currentColor"/>
-      <circle cx="20" cy="48" r="3" fill="currentColor"/>
-      <circle cx="44" cy="48" r="3" fill="currentColor"/>
-      <line x1="32" y1="32" x2="14" y2="22" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="32" y1="32" x2="50" y2="22" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="32" y1="32" x2="20" y2="48" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="32" y1="32" x2="44" y2="48" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="32" cy="32" r="4" fill="currentColor" />
+      <circle cx="14" cy="22" r="3" fill="currentColor" />
+      <circle cx="50" cy="22" r="3" fill="currentColor" />
+      <circle cx="20" cy="48" r="3" fill="currentColor" />
+      <circle cx="44" cy="48" r="3" fill="currentColor" />
+      <line x1="32" y1="32" x2="14" y2="22" stroke="currentColor" stroke-width="1.5" />
+      <line x1="32" y1="32" x2="50" y2="22" stroke="currentColor" stroke-width="1.5" />
+      <line x1="32" y1="32" x2="20" y2="48" stroke="currentColor" stroke-width="1.5" />
+      <line x1="32" y1="32" x2="44" y2="48" stroke="currentColor" stroke-width="1.5" />
     </svg>
     <svg class="mol-2" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="32" cy="32" r="4" fill="currentColor"/>
-      <circle cx="12" cy="14" r="3" fill="currentColor"/>
-      <circle cx="52" cy="14" r="3" fill="currentColor"/>
-      <circle cx="12" cy="50" r="3" fill="currentColor"/>
-      <circle cx="52" cy="50" r="3" fill="currentColor"/>
-      <line x1="32" y1="32" x2="12" y2="14" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="32" y1="32" x2="52" y2="14" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="32" y1="32" x2="12" y2="50" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="32" y1="32" x2="52" y2="50" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="32" cy="32" r="4" fill="currentColor" />
+      <circle cx="12" cy="14" r="3" fill="currentColor" />
+      <circle cx="52" cy="14" r="3" fill="currentColor" />
+      <circle cx="12" cy="50" r="3" fill="currentColor" />
+      <circle cx="52" cy="50" r="3" fill="currentColor" />
+      <line x1="32" y1="32" x2="12" y2="14" stroke="currentColor" stroke-width="1.5" />
+      <line x1="32" y1="32" x2="52" y2="14" stroke="currentColor" stroke-width="1.5" />
+      <line x1="32" y1="32" x2="12" y2="50" stroke="currentColor" stroke-width="1.5" />
+      <line x1="32" y1="32" x2="52" y2="50" stroke="currentColor" stroke-width="1.5" />
     </svg>
     <svg class="mol-3" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="32" cy="32" r="4" fill="currentColor"/>
-      <circle cx="20" cy="20" r="3" fill="currentColor"/>
-      <circle cx="44" cy="20" r="3" fill="currentColor"/>
-      <circle cx="32" cy="52" r="3" fill="currentColor"/>
-      <line x1="32" y1="32" x2="20" y2="20" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="32" y1="32" x2="44" y2="20" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="32" y1="32" x2="32" y2="52" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="32" cy="32" r="4" fill="currentColor" />
+      <circle cx="20" cy="20" r="3" fill="currentColor" />
+      <circle cx="44" cy="20" r="3" fill="currentColor" />
+      <circle cx="32" cy="52" r="3" fill="currentColor" />
+      <line x1="32" y1="32" x2="20" y2="20" stroke="currentColor" stroke-width="1.5" />
+      <line x1="32" y1="32" x2="44" y2="20" stroke="currentColor" stroke-width="1.5" />
+      <line x1="32" y1="32" x2="32" y2="52" stroke="currentColor" stroke-width="1.5" />
     </svg>
     <svg class="mol-4" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="32" cy="32" r="4" fill="currentColor"/>
-      <circle cx="16" cy="24" r="3" fill="currentColor"/>
-      <circle cx="48" cy="24" r="3" fill="currentColor"/>
-      <circle cx="16" cy="44" r="3" fill="currentColor"/>
-      <circle cx="48" cy="44" r="3" fill="currentColor"/>
-      <line x1="32" y1="32" x2="16" y2="24" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="32" y1="32" x2="48" y2="24" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="32" y1="32" x2="16" y2="44" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="32" y1="32" x2="48" y2="44" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="32" cy="32" r="4" fill="currentColor" />
+      <circle cx="16" cy="24" r="3" fill="currentColor" />
+      <circle cx="48" cy="24" r="3" fill="currentColor" />
+      <circle cx="16" cy="44" r="3" fill="currentColor" />
+      <circle cx="48" cy="44" r="3" fill="currentColor" />
+      <line x1="32" y1="32" x2="16" y2="24" stroke="currentColor" stroke-width="1.5" />
+      <line x1="32" y1="32" x2="48" y2="24" stroke="currentColor" stroke-width="1.5" />
+      <line x1="32" y1="32" x2="16" y2="44" stroke="currentColor" stroke-width="1.5" />
+      <line x1="32" y1="32" x2="48" y2="44" stroke="currentColor" stroke-width="1.5" />
     </svg>
   </div>
-
   <div class="hud-panel hud-a" aria-hidden="true"><span class="hud-title">DNA DATA</span><div class="hud-circle"></div></div>
   <div class="hud-panel hud-b" aria-hidden="true"><span class="hud-title">GENOME</span><div class="hud-circle"></div></div>
   <div class="hud-panel hud-c" aria-hidden="true"><span class="hud-title">SEQUENCE</span><div class="hud-circle"></div></div>
   <div class="hud-panel hud-d" aria-hidden="true"><span class="hud-title">ANALYSIS</span><div class="hud-circle"></div></div>
 
-  <!--导航栏：平台介绍、结果展示恢复原版深蓝白底，仅数据上传白底黑字 -->
   <div class="nav-bar">
     <button class="nav-btn" data-target="intro" onclick="location.href='intro.html'">平台介绍</button>
     <button class="nav-btn btn-upload-fixed" data-target="analysis" onclick="location.href='analysis.html'">数据上传</button>
@@ -791,7 +723,6 @@
         </div>
         <button class="btn-export">执行处理并导出本模块数据</button>
       </div>
-
       <div class="block" id="block-geno">
         <h3>🧬 基因型数据处理</h3>
         <div class="item">
@@ -818,7 +749,6 @@
         </div>
         <button class="btn-export">执行处理并导出本模块数据</button>
       </div>
-
       <div class="block" id="block-rna">
         <h3>📜 RNAseq数据处理</h3>
         <div class="item">
@@ -858,7 +788,6 @@
         </div>
         <button class="btn-export">执行处理并导出本模块数据</button>
       </div>
-
       <div class="block" id="block-pred">
         <h3>🔮 表达量预测</h3>
         <div class="item">
@@ -877,7 +806,6 @@
         </div>
         <button class="btn-export">执行处理并导出本模块数据</button>
       </div>
-
       <div class="block" id="block-gwas">
         <h3>📈 GWAS分析<br />(单性状动物模型 / 随机回归模型)</h3>
         <div class="item">
@@ -900,7 +828,6 @@
         </div>
         <button class="btn-export">执行分析并导出本模块数据</button>
       </div>
-
       <div class="block" id="block-twas">
         <h3>🧪 TWAS分析(常规 / 纵向)</h3>
         <div class="item">
@@ -925,88 +852,7 @@
       </div>
     </div>
   </div>
-
-  <!--底部科技装饰区 -->
-  <div class="bottom-tech-zone" aria-hidden="true">
-    <div class="circuit-layer">
-      <svg viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="circuitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.1"/>
-            <stop offset="50%" stop-color="#7dd3fc" stop-opacity="0.8"/>
-            <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.1"/>
-          </linearGradient>
-        </defs>
-        <path d="M0 90 Q120 40, 240 90 T480 90 T720 90 T960 90 T1200 90 T1440 90" stroke="url(#circuitGrad)" stroke-width="1.5" fill="none"/>
-        <path d="M0 120 Q180 70, 360 120 T720 120 T1080 120 T1440 120" stroke="url(#circuitGrad)" stroke-width="1" fill="none" opacity="0.7"/>
-        <path d="M0 60 Q200 20, 400 60 T800 60 T1200 60 T1440 60" stroke="url(#circuitGrad)" stroke-width="1" fill="none" opacity="0.5"/>
-        <path d="M120 90 L120 50 M240 90 L240 130 M360 90 L360 40 M480 90 L480 140 M600 90 L600 55 M720 90 L720 125 M840 90 L840 45 M960 90 L960 135 M1080 90 L1080 60 M1200 90 L1200 120 M1320 90 L1320 50" stroke="#7dd3fc" stroke-width="1" opacity="0.6"/>
-        <circle cx="120" cy="90" r="3" fill="#7dd3fc" opacity="0.9"/>
-        <circle cx="240" cy="90" r="3" fill="#7dd3fc" opacity="0.9"/>
-        <circle cx="360" cy="90" r="4" fill="#bae6fd" opacity="1"/>
-        <circle cx="480" cy="90" r="3" fill="#7dd3fc" opacity="0.9"/>
-        <circle cx="600" cy="90" r="3" fill="#7dd3fc" opacity="0.9"/>
-        <circle cx="720" cy="90" r="4" fill="#bae6fd" opacity="1"/>
-        <circle cx="840" cy="90" r="3" fill="#7dd3fc" opacity="0.9"/>
-        <circle cx="960" cy="90" r="3" fill="#7dd3fc" opacity="0.9"/>
-        <circle cx="1080" cy="90" r="4" fill="#bae6fd" opacity="1"/>
-        <circle cx="1200" cy="90" r="3" fill="#7dd3fc" opacity="0.9"/>
-        <circle cx="1320" cy="90" r="3" fill="#7dd3fc" opacity="0.9"/>
-        <path d="M180 140 C200 130, 220 130, 240 140 C260 150, 220 150, 200 160" stroke="#7dd3fc" stroke-width="1.5" fill="none"/>
-        <path d="M820 150 C840 140, 860 140, 880 150 C900 160, 860 160, 840 170" stroke="#7dd3fc" stroke-width="1.5" fill="none"/>
-        <path d="M1180 145 C1200 135, 1220 135, 1240 145 C1260 155, 1220 155, 1200 165" stroke="#7dd3fc" stroke-width="1.5" fill="none"/>
-        <circle cx="60" cy="70" r="2" fill="#bae6fd" opacity="0.8"/>
-        <circle cx="300" cy="110" r="2" fill="#bae6fd" opacity="0.8"/>
-        <circle cx="540" cy="50" r="2" fill="#bae6fd" opacity="0.8"/>
-        <circle cx="780" cy="130" r="2" fill="#bae6fd" opacity="0.8"/>
-        <circle cx="1020" cy="75" r="2" fill="#bae6fd" opacity="0.8"/>
-        <circle cx="1260" cy="115" r="2" fill="#bae6fd" opacity="0.8"/>
-      </svg>
-    </div>
-    <div class="data-nodes" aria-hidden="true">
-      <div class="data-node"></div><div class="data-node"></div><div class="data-node"></div><div class="data-node"></div>
-      <div class="data-node"></div><div class="data-node"></div><div class="data-node"></div><div class="data-node"></div>
-    </div>
-    <div class="bottom-instruments" aria-hidden="true">
-      <svg class="bottom-ins-microscope" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-        <rect x="20" y="44" width="24" height="6" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
-        <rect x="26" y="26" width="12" height="18" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
-        <circle cx="32" cy="20" r="6" stroke="currentColor" stroke-width="2" fill="none"/>
-        <path d="M32 26 L32 34" stroke="currentColor" stroke-width="2"/>
-        <path d="M22 50 L42 50" stroke="currentColor" stroke-width="2"/>
-      </svg>
-      <svg class="bottom-ins-dna" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-        <path d="M14 14 C24 20, 40 20, 50 28 C60 36, 44 42, 34 50 C24 58, 14 52, 14 44 C14 36, 30 32, 40 36" stroke="currentColor" stroke-width="2" fill="none"/>
-        <path d="M14 22 C24 28, 40 28, 50 36 C60 44, 44 50, 34 58" stroke="currentColor" stroke-width="2" fill="none"/>
-      </svg>
-      <svg class="bottom-ins-chip" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-        <rect x="14" y="14" width="36" height="36" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
-        <rect x="20" y="20" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <rect x="28" y="20" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <rect x="36" y="20" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <rect x="20" y="28" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <rect x="28" y="28" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <rect x="36" y="28" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <rect x="20" y="36" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <rect x="28" y="36" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <rect x="36" y="36" width="6" height="6" stroke="currentColor" stroke-width="1.5" fill="none"/>
-      </svg>
-      <svg class="bottom-ins-pcr" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-        <rect x="12" y="28" width="40" height="24" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
-        <rect x="18" y="34" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <rect x="28" y="34" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <rect x="38" y="34" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <path d="M14 28 L14 20 L50 20 L50 28" stroke="currentColor" stroke-width="2" fill="none"/>
-      </svg>
-      <svg class="bottom-ins-beaker" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-        <rect x="26" y="8" width="12" height="6" stroke="currentColor" stroke-width="2" fill="none"/>
-        <path d="M28 14 L28 40 L18 54 L46 54 L36 40 L36 14 Z" stroke="currentColor" stroke-width="2" fill="none"/>
-        <path d="M22 48 L42 48" stroke="currentColor" stroke-width="2"/>
-      </svg>
-    </div>
-  </div>
 </div>
-
 <script>
 document.querySelectorAll('.btn-export').forEach(btn=>{
   btn.addEventListener('click',function(){
