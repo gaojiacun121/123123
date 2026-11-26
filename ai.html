@@ -396,33 +396,6 @@
       color:#e0f2fe;
     }
 
-    /* 语言切换 */
-    .lang-toggle{
-      display:inline-flex;
-      gap:6px;
-      margin-bottom:14px;
-      border:1px solid rgba(125,211,252,0.35);
-      border-radius:10px;
-      padding:4px;
-      background:rgba(15,58,110,0.35);
-    }
-    .lang-toggle button{
-      padding:6px 18px;
-      border:none;
-      border-radius:8px;
-      background:transparent;
-      color:#bae6fd;
-      font-size:14px;
-      cursor:pointer;
-      transition:0.22s ease;
-    }
-    .lang-toggle button.active{
-      background:linear-gradient(135deg,#38bdf8,#2563eb);
-      color:#fff;
-      box-shadow:0 2px 8px rgba(14,165,233,0.35);
-    }
-
-    body[data-ui="en"] [lang="zh"], body[data-ui="zh"] [lang="en"] { display:none !important; }
     .ask-desc{
       color:#bae6fd;
       font-size:15px;
@@ -535,7 +508,6 @@
       margin:10px 0;
     }
     .note-p strong{ color:#e0f2fe; }
-    .note-p a{ color:#7dd3fc; }
     .alert-warning{
       margin:14px 0;
       padding:12px 16px;
@@ -578,7 +550,7 @@
     }
     .flow-arrow{ color:#7dd3fc; font-size:16px; }
 
-    /* ===== 模块速览网格 ===== */
+    /* ===== 模块速览网格 */
     .grid-wrap {
       display:grid;
       grid-template-columns:repeat(3,1fr);
@@ -600,14 +572,14 @@
       border-color:#7dd3fc;
     }
     .mod-card h3{
-      font-size:18px;
+      font-size:20px;
       margin-bottom:10px;
       padding-left:8px;
       border-left:4px solid #38bdf8;
       color:#e0f2fe;
     }
     .mod-item{
-      font-size:14px;
+      font-size:16px;
       padding:8px 0;
       border-bottom:1px dashed rgba(125,211,252,0.22);
       color:#bae6fd;
@@ -619,7 +591,8 @@
     @media(max-width:1200px){
       .grid-wrap{gap:18px;}
       .mod-card{padding:18px 16px;}
-      .mod-card h3{font-size:16px;}
+      .mod-card h3{font-size:18px;}
+      .mod-item{font-size:14px;}
       h2{font-size:24px;}
     }
     @media(max-width:992px){
@@ -786,10 +759,10 @@
   <div class="hud-panel hud-d" aria-hidden="true"><span class="hud-title">ANALYSIS</span><div class="hud-circle"></div></div>
 
   <div class="nav-bar">
-    <button class="nav-btn" data-target="intro" onclick="location.href='intro.html'">平台介绍</button>
-    <button class="nav-btn" data-target="analysis" onclick="location.href='analysis.html'">数据上传</button>
-    <button class="nav-btn" data-target="result" onclick="location.href='result.html'">结果展示</button>
-    <button class="nav-btn active" data-target="askai">AI 分析助手</button>
+    <a class="nav-btn" data-target="intro" href="intro.html">平台介绍</a>
+    <a class="nav-btn" data-target="analysis" href="analysis.html">数据上传</a>
+    <a class="nav-btn" data-target="result" href="result.html">结果展示</a>
+    <a class="nav-btn active" data-target="askai" href="ai.html">AI 分析助手</a>
   </div>
 
   <div class="container">
@@ -797,61 +770,42 @@
       <a href="index.html">← 返回平台首页</a>
     </div>
     <h2>🤖 AI 分析助手</h2>
-    <p class="subtitle" lang="zh">用自然语言描述你的数据与分析目标，本页生成一份携带平台全部模块说明的提示词，交给外部 AI 助手即可获得模块选择与参数配置建议。</p>
-    <p class="subtitle" lang="en">Describe your data and goal in plain language. This page builds a prompt that includes every platform module and its options; hand it to an AI assistant for module and parameter suggestions.</p>
+    <p class="subtitle">用自然语言描述你的数据与分析目标，本页生成一份携带平台全部模块说明的提示词，交给外部 AI 助手即可获得模块选择与参数配置建议。</p>
 
-    <!-- ===== Ask AI 主功能区 ===== -->
-    <div class="block" id="ask-ai" data-ui="zh">
-      <div class="lang-toggle" role="group" aria-label="Language / 语言">
-        <button type="button" data-set-lang="zh">中文</button>
-        <button type="button" data-set-lang="en">English</button>
-      </div>
+    <div class="block" id="ask-ai">
+      <p class="ask-desc">描述你的数据和想做的分析。本页生成的提示词包含平台完整模块说明与全部参数选项；把它交给 AI 助手，就能得到推荐模块、运行顺序和参数配置建议。</p>
 
-      <p class="ask-desc" lang="zh">描述你的数据和想做的分析。本页生成的提示词包含平台完整模块说明与全部参数选项；把它交给 AI 助手，就能得到推荐模块、运行顺序和参数配置建议。</p>
-      <p class="ask-desc" lang="en">Describe your data and the analysis you want. The generated prompt contains the full module list and every available option; give it to an AI assistant to get recommended modules, run order and parameter settings.</p>
-
-      <label class="ask-label" for="ask-question">
-        <span lang="zh">你的分析需求</span>
-        <span lang="en">Your task</span>
-      </label>
-      <textarea id="ask-question" rows="6"></textarea>
+      <label class="ask-label" for="ask-question">你的分析需求</label>
+      <textarea id="ask-question" rows="6" placeholder="例如：我有肉兔的纵向重复称重记录（含年龄、性别协变量）、PLINK 基因型和一批 RNA‑seq 表达矩阵，想从预处理一路做到纵向 TWAS，给出模块选择和参数配置建议。"></textarea>
 
       <div class="examples">
-        <span class="hint" lang="zh">示例：</span>
-        <span class="hint" lang="en">Examples:</span>
-        <button type="button" class="chip" data-example="preprocess"><span lang="zh">表型与基因型质控</span><span lang="en">Phenotype & genotype QC</span></button>
-        <button type="button" class="chip" data-example="rna"><span lang="zh">RNA-seq 质控与标准化</span><span lang="en">RNA-seq QC & normalization</span></button>
-        <button type="button" class="chip" data-example="predict"><span lang="zh">表达量预测建模</span><span lang="en">Expression prediction</span></button>
-        <button type="button" class="chip" data-example="twas-std"><span lang="zh">常规 TWAS</span><span lang="en">Standard TWAS</span></button>
-        <button type="button" class="chip" data-example="twas-long"><span lang="zh">纵向 TWAS</span><span lang="en">Longitudinal TWAS</span></button>
-        <button type="button" class="chip" data-example="pipeline"><span lang="zh">完整流程规划</span><span lang="en">Full pipeline plan</span></button>
+        <span class="hint">示例：</span>
+        <button type="button" class="chip" data-example="preprocess">表型与基因型质控</button>
+        <button type="button" class="chip" data-example="rna">RNA‑seq 质控与标准化</button>
+        <button type="button" class="chip" data-example="predict">表达量预测建模</button>
+        <button type="button" class="chip" data-example="twas‑std">常规 TWAS</button>
+        <button type="button" class="chip" data-example="twas‑long">纵向 TWAS</button>
+        <button type="button" class="chip" data-example="pipeline">完整流程规划</button>
       </div>
 
       <div class="actions">
-        <button type="button" class="btn-primary-action" id="ask-copy">
-          <span lang="zh">📋 复制提示词</span>
-          <span lang="en">📋 Copy prompt</span>
-        </button>
+        <button type="button" class="btn-primary-action" id="ask-copy">📋 复制提示词</button>
       </div>
 
       <p id="ask-status" role="status" aria-live="polite"></p>
       <textarea id="ask-output" readonly aria-label="Prompt"></textarea>
 
-      <p class="note-p" lang="zh"><strong>复制提示词</strong>会复制内嵌完整模块文档的提示词，可粘贴到任意 AI 助手。</p>
-      <p class="note-p" lang="en"><strong>Copy prompt</strong> copies the prompt with the full module documentation inline. Paste it into any assistant.</p>
+      <p class="note-p"><strong>复制提示词</strong>会复制内嵌完整模块文档的提示词，可粘贴到任意 AI 助手。</p>
 
       <div class="alert-warning" role="note">
-        <span lang="zh">⚠️ AI 的建议可能出错。在平台上正式运行前，请对照下方模块说明核对每个参数取值；模型无法完成的分析，应以平台实际模块能力为准。</span>
-        <span lang="en">⚠️ AI suggestions can be wrong. Before running a real job, check every option against the module reference below; trust the platform's actual module capabilities rather than the model. </span>
+        ⚠️ AI 的建议可能出错。在平台上正式运行前，请对照下方模块说明核对每个参数取值；模型无法完成的分析，应以平台实际模块能力为准。
       </div>
 
-      <p class="privacy" lang="zh">🔒 本页所有拼装均在浏览器本地完成，你输入的内容不会被发送到任何服务器。</p>
-      <p class="privacy" lang="en">🔒 Everything is assembled locally in your browser. Nothing you type is sent anywhere by this page.</p>
+      <p class="privacy">🔒 本页所有拼装均在浏览器本地完成，你输入的内容不会被发送到任何服务器。</p>
     </div>
 
-    <!-- ===== 流程链 ===== -->
     <div class="flow-chain">
-      <span class="flow-node">表型 / 基因型 / RNA-seq 预处理</span>
+      <span class="flow-node">表型 / 基因型 / RNA‑seq 预处理</span>
       <span class="flow-arrow">→</span>
       <span class="flow-node">表达量预测（GReX）</span>
       <span class="flow-arrow">→</span>
@@ -860,7 +814,6 @@
       <span class="flow-node">TWAS 精细定位</span>
     </div>
 
-    <!-- ===== 模块速览 ===== -->
     <div class="grid-wrap">
       <div class="mod-card">
         <h3>📊 表型数据处理</h3>
@@ -870,16 +823,16 @@
       <div class="mod-card">
         <h3>🧬 基因型数据处理</h3>
         <div class="mod-item"><span class="k">输入：</span>PLINK 等格式基因型数据</div>
-        <div class="mod-item"><span class="k">参数：</span>MAF（＜1% / ＜5%）；个体缺失率（＞5% / ＞10%）；HWE 检验（P＜1e-6 剔除）</div>
+        <div class="mod-item"><span class="k">参数：</span>MAF（＜1% / ＜5%）；个体缺失率（＞5% / ＞10%）；HWE 检验（P＜1e‑6 剔除）</div>
       </div>
       <div class="mod-card">
-        <h3>📜 RNA-seq 数据处理</h3>
-        <div class="mod-item"><span class="k">输入：</span>RNA-seq 表达矩阵</div>
+        <h3>📜 RNA‑seq 数据处理</h3>
+        <div class="mod-item"><span class="k">输入：</span>RNA‑seq 表达矩阵</div>
         <div class="mod-item"><span class="k">参数：</span>低质量样本剔除（比对率＜80%）；低表达基因去除（＞50% 样本为 0）；标准化（TPM / FPKM）；批次校正（ComBat / PEER）</div>
       </div>
       <div class="mod-card">
         <h3>🔮 表达量预测</h3>
-        <div class="mod-item"><span class="k">输入：</span>RNA-seq 表达矩阵（训练权重）、预处理后基因型，两类样本一一对应</div>
+        <div class="mod-item"><span class="k">输入：</span>RNA‑seq 表达矩阵（训练权重）、预处理后基因型，两类样本一一对应</div>
         <div class="mod-item"><span class="k">模型：</span>Elastic Net（L1+L2 混合惩罚）；输出预测 GReX 权重文件</div>
       </div>
       <div class="mod-card">
@@ -902,9 +855,7 @@
   var question = document.getElementById('ask-question');
   var status = document.getElementById('ask-status');
   var output = document.getElementById('ask-output');
-  var storageKey = 'twas-ask-ai-lang';
 
-  /* ===== 内嵌平台文档（等价于外部文档文件，全部在本地拼装） ===== */
   var PLATFORM_DOCS = [
     '平台名称：纵向性状全转录组关联分析精细定位计算平台（TWAS 计算平台）',
     '适用场景：畜禽（肉兔等动物）遗传育种中的 GWAS、表达量预测与 TWAS 分析。',
@@ -923,11 +874,11 @@
     '- 参数：',
     '  · 最小等位基因频率 MAF（geno_maf）：可选「剔除MAF小于1%」「剔除MAF小于5%」。',
     '  · 个体缺失率（geno_miss）：可选「剔除高于5%」「剔除高于10%」。',
-    '  · 哈代-温伯格平衡检验（geno_hwe，开关）：开启后剔除 P < 1e-6 的 SNP。',
+    '  · 哈代‑温伯格平衡检验（geno_hwe，开关）：开启后剔除 P < 1e‑6 的 SNP。',
     '- 输出：质控后的基因型数据，供表达量预测与 GWAS 模块使用。',
     '',
-    '模块 3｜RNA-seq 数据处理（rna）',
-    '- 输入：RNA-seq 表达矩阵。',
+    '模块 3｜RNA‑seq 数据处理（rna）',
+    '- 输入：RNA‑seq 表达矩阵。',
     '- 参数：',
     '  · 剔除低质量样本（rna_filter_sample，开关）：比对率低于 80% 的样本剔除。',
     '  · 去除低表达基因（rna_filter_gene，开关）：超过 50% 样本中表达量为 0 的基因去除。',
@@ -936,7 +887,7 @@
     '- 输出：标准化后的表达矩阵，供表达量预测模块训练权重。',
     '',
     '模块 4｜表达量预测（pred）',
-    '- 输入：RNA-seq 表达矩阵（用于训练权重）、预处理后基因型；两类样本需一一对应。',
+    '- 输入：RNA‑seq 表达矩阵（用于训练权重）、预处理后基因型；两类样本需一一对应。',
     '- 参数：预测模型（pred_model）：Elastic Net（L1+L2 混合惩罚）。',
     '- 输出：SNP→基因表达预测权重 / 预测 GReX 文件，供 TWAS 模块使用。',
     '',
@@ -953,93 +904,35 @@
     '- 输出：TWAS 关联结果与候选基因列表。',
     '',
     '推荐流程顺序：',
-    '1. 表型数据处理（模块1）→ 2. 基因型数据处理（模块2）→ 3. RNA-seq 数据处理（模块3）',
+    '1. 表型数据处理（模块1）→ 2. 基因型数据处理（模块2）→ 3. RNA‑seq 数据处理（模块3）',
     '→ 4. 表达量预测（模块4，依赖模块2、3）→ 5. GWAS 分析（模块5，依赖模块1、2）',
     '→ 6. TWAS 分析（模块6，依赖模块4、5）。'
   ].join('\n');
 
-  var text = {
-    zh: {
-      placeholder: '例如：我有肉兔的纵向重复称重记录（含年龄、性别协变量）、PLINK 基因型和一批 RNA-seq 表达矩阵，想从预处理一路做到纵向 TWAS，给出模块选择和参数配置建议。',
-      empty: '请先描述你的分析需求。',
-      copied: '已复制（约 {k}k token）。请粘贴到任意 AI 助手。',
-      copyFailed: '无法自动复制，请手动选中下方文本并复制。',
-      intro: '我在使用「纵向性状全转录组关联分析精细定位计算平台」（TWAS 计算平台），一个面向畜禽（肉兔等动物）遗传育种的 Web 分析平台。',
-      docsInline: '上方 <platform-docs> 标签之间是平台全部模块及其参数选项说明。',
-      rules: [
-        '请按以下规则帮我用该平台完成分析：',
-        '1. 说明应使用哪个或哪些模块以及原因，一两句话即可。',
-        '2. 按数据流程顺序给出各模块的参数配置建议（表型/基因型/RNA-seq 预处理 → 表达量预测 → GWAS → TWAS）。',
-        '3. 只使用文档中列出的参数与可选值，不要编造参数、算法或取值；平台无法完成的分析请直接说明。',
-        '4. 若未给出文件名、列名或性状类型，请用 <pheno_file>、<geno_prefix> 等清楚的占位符，并列出你的假设。',
-        '5. 简要解释关键参数的选择依据，以及各模块应查看哪些输出结果。',
-        '6. 请用中文回答；文件名、模型名、方法名（如 Elastic Net、ComBat、PEER、TPM、FPKM）保留英文原样。'
-      ],
-      task: '我的分析需求：',
-      examples: {
-        preprocess: '我有一批肉兔的表型记录（体重、年龄、性别）和 PLINK 基因型数据，部分个体表型存在缺失。想在进入 GWAS 前完成表型与基因型质控，请给出模块选择和参数配置建议。',
-        rna: '我有多批次采集的 RNA-seq 表达矩阵，部分样本比对率偏低，部分基因在多数样本中表达量为 0。想完成样本/基因过滤、表达量标准化与批次效应校正。',
-        predict: '我有与基因型一一对应的 RNA-seq 表达矩阵和质控后的基因型，样本量约 300。想训练 SNP→基因表达的预测权重（GReX），用于后续 TWAS。',
-        'twas-std': '我已有某单时间点性状的 GWAS 汇总结果和预测 GReX 文件，想做常规 TWAS 定位候选基因，请给出模块与参数建议。',
-        'twas-long': '每只肉兔在多个时间点重复测定体重，想利用纵向重复测量信息做纵向 TWAS，定位不同发育阶段起作用的基因。',
-        pipeline: '我有纵向重复测量的表型、PLINK 基因型和 RNA-seq 表达矩阵，想从原始数据一路完成预处理、表达量预测、GWAS 到纵向 TWAS，请给出完整流程规划与各模块参数配置。'
-      }
-    },
-    en: {
-      placeholder: 'e.g. I have repeated body-weight records (with age and sex covariates), PLINK genotypes and an RNA-seq matrix from rabbits. I want a plan from preprocessing all the way to longitudinal TWAS, with module and parameter suggestions.',
-      empty: 'Please describe your task first.',
-      copied: 'Copied (about {k}k tokens). Paste it into any assistant.',
-      copyFailed: 'Could not copy automatically. Select the text below and copy it.',
-      intro: 'I use the "Longitudinal Trait TWAS Fine-Mapping Platform", a web analysis platform for livestock (rabbit etc.) breeding research.',
-      docsInline: 'The <platform-docs> tags above contain every module of the platform and its available options.',
-      rules: [
-        'Please help me complete the analysis with this platform, following these rules:',
-        '1. Say which module(s) to use and why, in one or two sentences.',
-        '2. Give parameter settings module by module in pipeline order (phenotype/genotype/RNA-seq QC → expression prediction → GWAS → TWAS).',
-        '3. Use only the parameters and option values listed in the documentation; do not invent parameters, algorithms or values. If the platform cannot do the task, say so.',
-        '4. Where file names, column names or trait type are not given, use clear placeholders such as <pheno_file>, <geno_prefix>, and list your assumptions.',
-        '5. Briefly explain the rationale for key options and which outputs to inspect in each module.',
-        '6. Answer in English; keep file names, model and method names (e.g. Elastic Net, ComBat, PEER, TPM, FPKM) in English.'
-      ],
-      task: 'My task:',
-      examples: {
-        preprocess: 'I have rabbit phenotype records (body weight, age, sex) and PLINK genotypes; some phenotypes are missing. Before GWAS, I want phenotype and genotype QC with module and parameter suggestions.',
-        rna: 'I have an RNA-seq expression matrix collected in multiple batches. Some samples have low alignment rates and some genes are zero in most samples. I want sample/gene filtering, normalization and batch correction.',
-        predict: 'I have an RNA-seq matrix matched one-to-one with QC-passed genotypes (about 300 samples). I want to train SNP→expression prediction weights (GReX) for downstream TWAS.',
-        'twas-std': 'I already have GWAS summary statistics for a single-timepoint trait and a predicted GReX file. I want a standard TWAS to prioritize candidate genes.',
-        'twas-long': 'Each rabbit was weighed repeatedly at multiple time points. I want a longitudinal TWAS that uses the repeated measures to find genes acting at different developmental stages.',
-        pipeline: 'I have longitudinal repeated-measure phenotypes, PLINK genotypes and an RNA-seq matrix. I want a full pipeline plan from raw data through preprocessing, expression prediction, GWAS to longitudinal TWAS, with per-module parameters.'
-      }
-    }
+  var examplesData = {
+    preprocess: '我有一批肉兔的表型记录（体重、年龄、性别）和 PLINK 基因型数据，部分个体表型存在缺失。想在进入 GWAS 前完成表型与基因型质控，请给出模块选择和参数配置建议。',
+    rna: '我有多批次采集的 RNA‑seq 表达矩阵，部分样本比对率偏低，部分基因在多数样本中表达量为 0。想完成样本/基因过滤、表达量标准化与批次效应校正。',
+    predict: '我有与基因型一一对应的 RNA‑seq 表达矩阵和质控后的基因型，样本量约 300。想训练 SNP→基因表达的预测权重（GReX），用于后续 TWAS。',
+    'twas‑std': '我已有某单时间点性状的 GWAS 汇总结果和预测 GReX 文件，想做常规 TWAS 定位候选基因，请给出模块与参数建议。',
+    'twas‑long': '每只肉兔在多个时间点重复测定体重，想利用纵向重复测量信息做纵向 TWAS，定位不同发育阶段起作用的基因。',
+    pipeline: '我有纵向重复测量的表型、PLINK 基因型和 RNA‑seq 表达矩阵，想从原始数据一路完成预处理、表达量预测、GWAS 到纵向 TWAS，请给出完整流程规划与各模块参数配置。'
   };
 
-  var lang = 'zh';
-
-  function fill(template, values) {
-    return template.replace(/\{(\w+)\}/g, function (m, key) { return values[key]; });
-  }
-
-  function buildPrompt() {
-    var t = text[lang];
+  function buildPrompt(){
     var parts = [];
-    parts.push('<platform-docs>\n' + PLATFORM_DOCS + '\n</platform-docs>', '');
-    parts.push(t.intro + ' ' + t.docsInline);
-    parts.push('', t.rules.join('\n'), '', t.task, question.value.trim());
+    parts.push('<platform‑docs>\n' + PLATFORM_DOCS + '\n</platform‑docs>', '');
+    parts.push('我在使用「纵向性状全转录组关联分析精细定位计算平台」（TWAS 计算平台），一个面向畜禽（肉兔等动物）遗传育种的 Web 分析平台。');
+    parts.push('上方 <platform‑docs> 标签之间是平台全部模块及其参数选项说明。');
+    parts.push('',
+      '请按以下规则帮我用该平台完成分析：',
+      '1. 说明应使用哪个或哪些模块以及原因，一两句话即可。',
+      '2. 按数据流程顺序给出各模块的参数配置建议（表型/基因型/RNA‑seq 预处理 → 表达量预测 → GWAS → TWAS）。',
+      '3. 只使用文档中列出的参数与可选值，不要编造参数、算法或取值；平台无法完成的分析请直接说明。',
+      '4. 若未给出文件名、列名或性状类型，请用 <pheno_file>、<geno_prefix> 等清楚的占位符，并列出你的假设。',
+      '5. 简要解释关键参数的选择依据，以及各模块应查看哪些输出结果。',
+      '6. 请用中文回答；文件名、模型名、方法名（如 Elastic Net、ComBat、PEER、TPM、FPKM）保留英文原样。');
+    parts.push('', '我的分析需求：', question.value.trim());
     return parts.join('\n');
-  }
-
-  function setLang(l) {
-    lang = l;
-    root.setAttribute('data-ui', l);
-    document.body.setAttribute('data-ui', l);
-    question.placeholder = text[l].placeholder;
-    root.querySelectorAll('[data-set-lang]').forEach(function (b) {
-      var on = b.getAttribute('data-set-lang') === l;
-      b.classList.toggle('active', on);
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
-    status.textContent = '';
-    try { localStorage.setItem(storageKey, l); } catch (e) {}
   }
 
   function fallbackCopy(value) {
@@ -1061,41 +954,45 @@
     }
   }
 
-  function requireQuestion(event) {
-    if (question.value.trim()) return true;
-    if (event) event.preventDefault();
-    status.textContent = text[lang].empty;
-    question.focus();
-    return false;
-  }
-
   document.getElementById('ask-copy').addEventListener('click', function () {
-    if (!requireQuestion()) return;
-    var t = text[lang];
+    status.textContent = '';
+    if (!question.value.trim()) {
+      status.textContent = '请先描述你的分析需求。';
+      question.focus();
+      return;
+    }
     var value = buildPrompt();
     copy(value, function (ok) {
-      status.textContent = ok ? fill(t.copied, { k: Math.round(value.length / 4000) }) : t.copyFailed;
+      if (ok) {
+        status.textContent = '已复制（约 ' + Math.round(value.length / 4000) + 'k token）。请粘贴到任意 AI 助手。';
+      } else {
+        status.textContent = '无法自动复制，请手动选中下方文本并复制。';
+      }
     });
   });
 
   question.addEventListener('input', function () { status.textContent = ''; });
 
-  root.querySelectorAll('[data-set-lang]').forEach(function (b) {
-    b.addEventListener('click', function () { setLang(b.getAttribute('data-set-lang')); });
-  });
-
   root.querySelectorAll('[data-example]').forEach(function (b) {
     b.addEventListener('click', function () {
-      question.value = text[lang].examples[b.getAttribute('data-example')];
+      question.value = examplesData[b.getAttribute('data-example')];
       status.textContent = '';
       question.focus();
     });
   });
 
-  var saved = null;
-  try { saved = localStorage.getItem(storageKey); } catch (e) {}
-  var browserZh = (navigator.languages || [navigator.language || '']).some(function (l) { return /^zh/i.test(l); });
-  setLang(saved === 'en' || saved === 'zh' ? saved : (browserZh ? 'zh' : 'en'));
+  (function(){
+    const path = window.location.pathname;
+    const btns = document.querySelectorAll(".nav-btn");
+    btns.forEach(b=>{
+      b.classList.remove("active");
+      const t = b.dataset.target;
+      if(t==="intro" && path.includes("intro.html")) b.classList.add("active");
+      if(t==="analysis" && path.includes("analysis.html")) b.classList.add("active");
+      if(t==="result" && path.includes("result.html")) b.classList.add("active");
+      if(t==="askai" && (path.includes("ask‑ai.html") || path.includes("ai.html"))) b.classList.add("active");
+    })
+  })();
 })();
 </script>
 </body>

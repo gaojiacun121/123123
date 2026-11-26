@@ -97,37 +97,26 @@
       background:rgba(226, 242, 255, 0.55);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      padding:14px 20px;
+      padding:12px 20px;
       display:flex;
       justify-content:center;
-      gap:16px;
+      gap:20px;
       border-bottom:1px solid rgba(125, 211, 252, 0.25);
     }
     .nav-btn{
-      padding:12px 30px;
+      display:inline-flex;
+      align-items:center;
+      text-decoration:none;
+      padding:10px 28px;
       border:none;
-      border-radius:10px;
+      border-radius:12px;
       font-size:17px;
       cursor:pointer;
-      transition:0.24s ease;
-    }
-    /* 平台介绍：白底黑字+蓝色描边 */
-    .nav-btn.btn-page-current{
-      background:#ffffff !important;
-      color:#222222 !important;
-      border:1px solid rgba(56, 189, 248, 0.45) !important;
-      box-shadow:0 4px 14px rgba(41, 128, 185, 0.15) !important;
-    }
-    .nav-btn.btn-page-current:hover{
-      background:#f7fbff !important;
-      color:#165DFF !important;
-    }
-    /* 普通按钮：深蓝色背景白字 */
-    .nav-btn.normal-blue{
       background:#2980b9;
       color:#ffffff;
+      transition:0.24s ease;
     }
-    .nav-btn.normal-blue:hover:not(.active){
+    .nav-btn:hover:not(.active){
       background:#1f6d99;
     }
     .nav-btn.active{
@@ -325,7 +314,7 @@
     @media(max-width:768px){
       .page-wrap{padding-bottom:20px;padding-top:64px;}
       .nav-bar{gap:8px;padding:10px 12px;}
-      .nav-btn{padding:8px 16px;font-size:15px;}
+      .nav-btn{padding:7px 14px;font-size:14px;}
       .form-row{
         grid-template-columns:1fr;
         gap:20px;
@@ -357,9 +346,10 @@
   <div class="hud-corner-mark bl" aria-hidden="true"></div>
   <div class="hud-corner-mark br" aria-hidden="true"></div>
   <div class="nav-bar">
-    <button class="nav-btn btn-page-current" data-target="intro" onclick="location.href='intro.html'">平台介绍</button>
-    <button class="nav-btn normal-blue" data-target="analysis" onclick="location.href='analysis.html'">数据上传</button>
-    <button class="nav-btn normal-blue" data-target="result" onclick="location.href='result.html'">结果展示</button>
+    <a class="nav-btn" data-target="intro" href="intro.html">平台介绍</a>
+    <a class="nav-btn active" data-target="analysis" href="analysis.html">数据上传</a>
+    <a class="nav-btn" data-target="result" href="result.html">结果展示</a>
+    <a class="nav-btn" data-target="askai" href="ai.html">AI 分析助手</a>
   </div>
   <div class="container">
     <div class="back-link">
@@ -432,7 +422,8 @@
     b.classList.remove("active");
     const t = b.dataset.target;
     if(t==="intro" && path.includes("intro.html")) b.classList.add("active");
-    if(t==="analysis" && path.includes("analysis.html")) b.classList.add("active");
+    if(t==="analysis" && (path.includes("analysis.html") || path.includes("upload-pheno.html") || path.includes("upload-geno.html"))) b.classList.add("active");
+    if(t==="askai" && (path.includes("ask-ai.html") || path.includes("ai.html"))) b.classList.add("active");
     if(t==="result" && path.includes("result.html")) b.classList.add("active");
   })
 })()
