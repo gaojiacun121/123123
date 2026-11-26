@@ -20,7 +20,7 @@
       position: relative;
       min-height: 100vh;
       width: 100%;
-      padding-top:70px;
+      padding-top:64px;
       padding-bottom:60px;
       overflow: auto;
       background:
@@ -270,7 +270,7 @@
     }
     .tag-top-left{top:90px;left:2%;}
     .tag-bottom-right{bottom:40px;right:2%;}
-    /* ===== 导航栏：和analysis保持完全一致 ===== */
+    /* ===== 导航栏：和analysis完全一致尺寸 ===== */
     .nav-bar{
       position:fixed;
       top:0;
@@ -280,37 +280,26 @@
       background:rgba(226, 242, 255, 0.55);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      padding:16px 20px;
+      padding:12px 20px;
       display:flex;
       justify-content:center;
       gap:20px;
       border-bottom:1px solid rgba(125, 211, 252, 0.25);
     }
     .nav-btn{
-      padding:14px 34px;
+      display:inline-flex;
+      align-items:center;
+      text-decoration:none;
+      padding:10px 28px;
       border:none;
       border-radius:12px;
-      font-size:19px;
+      font-size:17px;
       cursor:pointer;
-      transition:0.24s ease;
-    }
-    /* 【平台介绍】现在使用原来data‑upload的样式：白底黑字+蓝色描边 */
-    .nav-btn.btn-page-current{
-      background:#ffffff !important;
-      color:#222222 !important;
-      border:1px solid rgba(56, 189, 248, 0.45) !important;
-      box-shadow:0 4px 14px rgba(41, 128, 185, 0.15) !important;
-    }
-    .nav-btn.btn-page-current:hover{
-      background:#f7fbff !important;
-      color:#165DFF !important;
-    }
-    /* 普通按钮（现在【数据上传】变回原版深蓝色） */
-    .nav-btn.normal-blue{
       background:#2980b9;
       color:#ffffff;
+      transition:0.24s ease;
     }
-    .nav-btn.normal-blue:hover:not(.active){
+    .nav-btn:hover:not(.active){
       background:#1f6d99;
     }
     .nav-btn.active{
@@ -374,18 +363,16 @@
       h2{font-size:34px;}
       .intro-card{padding:42px 36px;font-size:19px;min-height:280px;}
       .intro-grid{gap:32px;}
-      .nav-bar{padding:14px 20px;gap:16px;}
-      .nav-btn{padding:12px 28px;font-size:18px;}
     }
     @media(max-width:768px){
-      .page-wrap{padding-top:70px; padding-bottom:40px;}
+      .page-wrap{padding-top:64px; padding-bottom:40px;}
       .nav-bar{
         gap:8px;
-        padding:12px 12px;
+        padding:10px 12px;
       }
       .nav-btn{
-        padding:10px 18px;
-        font-size:16px;
+        padding:7px 14px;
+        font-size:14px;
       }
       .pulse-particles{display:none;}
       .scan-flow-light{display:none;}
@@ -430,11 +417,12 @@
   </div>
   <div class="corner-tag tag-top-left">PLATFORM‑INFO</div>
   <div class="corner-tag tag-bottom-right">ANALYSIS‑PIPELINE</div>
-  <!-- 按钮顺序【位置完全不变】：平台介绍（现在白底蓝边）｜数据上传（变回深蓝）｜结果展示（深蓝） -->
+  <!-- 导航：平台介绍｜数据上传｜结果展示｜AI 分析助手 -->
   <div class="nav-bar">
-    <button class="nav-btn btn-page-current" data-target="intro" onclick="location.href='intro.html'">平台介绍</button>
-    <button class="nav-btn normal-blue" data-target="analysis" onclick="location.href='analysis.html'">数据上传</button>
-    <button class="nav-btn normal-blue" data-target="result" onclick="location.href='result.html'">结果展示</button>
+    <a class="nav-btn active" data-target="intro" href="intro.html">平台介绍</a>
+    <a class="nav-btn" data-target="analysis" href="analysis.html">数据上传</a>
+    <a class="nav-btn" data-target="result" href="result.html">结果展示</a>
+    <a class="nav-btn" data-target="askai" href="ai.html">AI 分析助手</a>
   </div>
   <div class="container">
     <div class="back-box">
@@ -461,6 +449,7 @@
     if(t==="intro" && path.includes("intro.html")) b.classList.add("active");
     if(t==="analysis" && path.includes("analysis.html")) b.classList.add("active");
     if(t==="result" && path.includes("result.html")) b.classList.add("active");
+    if(t==="askai" && (path.includes("ask-ai.html") || path.includes("ai.html"))) b.classList.add("active");
   })
 })()
 </script>

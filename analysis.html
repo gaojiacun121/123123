@@ -329,6 +329,9 @@
       border-bottom:1px solid rgba(125, 211, 252, 0.25);
     }
     .nav-btn{
+      display:inline-flex;
+      align-items:center;
+      text-decoration:none;
       padding:10px 28px;
       border:none;
       border-radius:12px;
@@ -338,23 +341,13 @@
       color:#ffffff;
       transition:0.24s ease;
     }
-    .nav-btn:hover:not(.active):not(.btn-upload-fixed){
+    .nav-btn:hover:not(.active){
       background:#1f6d99;
     }
     .nav-btn.active{
       background:#ffffff;
       color:#222222;
       box-shadow:0 2px 6px rgba(0,0,0,0.12);
-    }
-    .btn-upload-fixed{
-      background:#ffffff !important;
-      color:#222222 !important;
-      border:1px solid rgba(56, 189, 248, 0.45) !important;
-      box-shadow:0 4px 14px rgba(41, 128, 185, 0.15) !important;
-    }
-    .btn-upload-fixed:hover{
-      background:#f7fbff !important;
-      color:#165DFF !important;
     }
 
     /* ===== 主体容器，恢复自然滚动 ===== */
@@ -692,9 +685,10 @@
   <div class="hud-panel hud-d" aria-hidden="true"><span class="hud-title">ANALYSIS</span><div class="hud-circle"></div></div>
 
   <div class="nav-bar">
-    <button class="nav-btn" data-target="intro" onclick="location.href='intro.html'">平台介绍</button>
-    <button class="nav-btn btn-upload-fixed" data-target="analysis" onclick="location.href='analysis.html'">数据上传</button>
-    <button class="nav-btn" data-target="result" onclick="location.href='result.html'">结果展示</button>
+    <a class="nav-btn" data-target="intro" href="intro.html">平台介绍</a>
+    <a class="nav-btn active" data-target="analysis" href="analysis.html">数据上传</a>
+    <a class="nav-btn" data-target="result" href="result.html">结果展示</a>
+    <a class="nav-btn" data-target="askai" href="ai.html">AI 分析助手</a>
   </div>
 
   <div class="container">
@@ -877,13 +871,14 @@ if(mod){
   const btns = document.querySelectorAll(".nav-btn");
   btns.forEach(b=>{
     const t = b.dataset.target;
-    if(b.classList.contains("btn-upload-fixed")){
-      return;
-    }
     b.classList.remove("active");
-    if((t==="intro" && path.endsWith("intro.html"))){
+    if(t==="intro" && path.endsWith("intro.html")){
       b.classList.add("active");
-    }else if((t==="result" && path.endsWith("result.html"))){
+    }else if(t==="analysis" && path.endsWith("analysis.html")){
+      b.classList.add("active");
+    }else if(t==="result" && path.endsWith("result.html")){
+      b.classList.add("active");
+    }else if(t==="askai" && (path.endsWith("ask-ai.html") || path.endsWith("ai.html"))){
       b.classList.add("active");
     }
   })
