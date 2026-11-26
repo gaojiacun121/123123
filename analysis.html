@@ -311,7 +311,6 @@
     }
     .tag-top-left{top:90px;left:2%;}
     .tag-bottom-right{bottom:16px;right:2%;}
-
     /* ===== 导航栏 ===== */
     .nav-bar{
       position:fixed;
@@ -349,7 +348,6 @@
       color:#222222;
       box-shadow:0 2px 6px rgba(0,0,0,0.12);
     }
-
     /* ===== 主体容器，恢复自然滚动 ===== */
     .container {
       position:relative;
@@ -415,6 +413,16 @@
     }
     .item:last-child {
       border-bottom: none;
+    }
+    .fixed-param-row{
+      font-size:15px;
+      padding:7px 0;
+      color:#bae6fd;
+      line-height:1.65;
+    }
+    .fixed-param-row strong{
+      color:#e0f2fe;
+      margin-right:6px;
     }
     input, select {
       width: 100%;
@@ -515,7 +523,6 @@
       background:#2563eb;
       color:#fff;
     }
-
     @media(max-width:1200px){
       .grid-wrap{gap:18px;}
       .block{padding:20px 18px;min-height:300px;}
@@ -683,14 +690,12 @@
   <div class="hud-panel hud-b" aria-hidden="true"><span class="hud-title">GENOME</span><div class="hud-circle"></div></div>
   <div class="hud-panel hud-c" aria-hidden="true"><span class="hud-title">SEQUENCE</span><div class="hud-circle"></div></div>
   <div class="hud-panel hud-d" aria-hidden="true"><span class="hud-title">ANALYSIS</span><div class="hud-circle"></div></div>
-
   <div class="nav-bar">
     <a class="nav-btn" data-target="intro" href="intro.html">平台介绍</a>
     <a class="nav-btn active" data-target="analysis" href="analysis.html">数据上传</a>
     <a class="nav-btn" data-target="result" href="result.html">结果展示</a>
     <a class="nav-btn" data-target="askai" href="ai.html">AI 分析助手</a>
   </div>
-
   <div class="container">
     <div class="back-home">
       <a href="index.html">← 返回平台首页</a>
@@ -723,22 +728,11 @@
           <a class="btn-small" href="upload-geno.html">打开完整基因型上传页面</a>
         </div>
         <div class="item">
-          参数设置
+          参数设置（固定）
           <div class="param-group">
-            <label>最小等位基因频率(MAF)</label>
-            <select>
-              <option>剔除MAF小于1%</option>
-              <option selected>剔除MAF小于5%</option>
-            </select>
-            <label>个体缺失率</label>
-            <select>
-              <option>剔除高于5%</option>
-              <option selected>剔除高于10%</option>
-            </select>
-            <div class="check-item">
-              <input type="checkbox" id="geno_hwe">
-              <label for="geno_hwe">哈代‑温伯格平衡检验（剔除P＜1e‑6的SNP）</label>
-            </div>
+            <div class="fixed-param-row"><strong>最小等位基因频率(MAF)：</strong>剔除MAF小于5%</div>
+            <div class="fixed-param-row"><strong>个体缺失率：</strong>剔除高于10%</div>
+            <div class="fixed-param-row"><strong>哈代‑温伯格平衡检验：</strong>剔除P＜1e‑6的SNP</div>
           </div>
         </div>
         <button class="btn-export">执行处理并导出本模块数据</button>
@@ -750,34 +744,12 @@
           <input type="file">
         </div>
         <div class="item">
-          参数设置
+          参数设置（固定）
           <div class="param-group">
-            <div class="check-item">
-              <input type="checkbox" id="rna_filter_sample">
-              <label for="rna_filter_sample">剔除低质量样本（比对率低于80%）</label>
-            </div>
-            <div class="check-item">
-              <input type="checkbox" id="rna_filter_gene">
-              <label for="rna_filter_gene">去除低表达基因（超过50%样本中表达量为0）</label>
-            </div>
-            <div class="check-item">
-              <input type="checkbox" id="rna_normalize">
-              <label for="rna_normalize">基因表达量标准化</label>
-            </div>
-            <label>标准化方法</label>
-            <select>
-              <option>TPM</option>
-              <option>FPKM</option>
-            </select>
-            <div class="check-item">
-              <input type="checkbox" id="rna_batch">
-              <label for="rna_batch">校正批次效应</label>
-            </div>
-            <label>批次校正方法</label>
-            <select>
-              <option>ComBat</option>
-              <option>PEER</option>
-            </select>
+            <div class="fixed-param-row"><strong>剔除低质量样本：</strong>比对率低于80%的样本剔除</div>
+            <div class="fixed-param-row"><strong>去除低表达基因：</strong>超过50%样本中表达量为0的基因去除</div>
+            <div class="fixed-param-row"><strong>标准化方法：</strong>TPM</div>
+            <div class="fixed-param-row"><strong>批次校正方法：</strong>PEER</div>
           </div>
         </div>
         <button class="btn-export">执行处理并导出本模块数据</button>
